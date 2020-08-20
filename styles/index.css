@@ -1,5 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa&family=Graduate&family=Noto+Sans+KR:wght@300&display=swap');
 /* purgecss start ignore */
 @tailwind base;
+
+body {
+  @apply bg-prussian;
+}
+
+p {
+  @apply font-body;
+}
+
+h1 {
+  @apply font-logo;
+}
+
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply font-title;
+}
+
 @tailwind components;
+
 /* purgecss end ignore */
 @tailwind utilities;

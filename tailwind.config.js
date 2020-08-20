@@ -10,6 +10,11 @@ module.exports = {
         imperial: '#e63946',
       },
     },
+    fontFamily: {
+      logo: ['Graduate', '-apple-system', 'sans-serif'],
+      title: ['Comfortaa', '-apple-system', 'sans-serif'],
+      body: ['Noto Sans KR', 'sans-serif'],
+    },
   },
   variants: {},
   plugins: [],
