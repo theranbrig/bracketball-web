@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import Navigation from '../components/Navigation';
 
 const index = () => {
   useEffect(() => {
@@ -11,11 +12,7 @@ const index = () => {
       });
   }, []);
 
-  return (
-    <div>
-      <h1 className='bg-prussian text-5xl text-powder border-b-2 border-imperial'>Bracketball</h1>
-    </div>
-  );
+  return <Navigation />;
 };
 
 export default index;

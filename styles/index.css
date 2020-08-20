@@ -12,6 +12,8 @@ p {
 
 h1 {
   @apply font-logo;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: #a8dadc;
 }
 
 h2,
@@ -23,6 +25,9 @@ h6 {
 }
 
 @tailwind components;
+
+h1 {
+}
 
 /* purgecss end ignore */
 @tailwind utilities;
