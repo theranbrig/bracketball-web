@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
+import cookie from 'js-cookie';
 import firebase from '../firebaseSetup';
 import { tokenName } from '../constants';
-import cookie from 'js-cookie';
 
 export const UserContext = React.createContext();
 
@@ -31,6 +31,22 @@ const UserProvider = ({ children }) => {
         }
       })
       .catch((err) => {
+        console.log(err);
+        setError(err);
+      });
+  };
+
+  const emailLogin = async (email, password, redirectPath) => {
+    setLoading(true);
+    await firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(() => {
+        console.log('USER SIGNED IN');
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
         setError(err);
       });
   };
@@ -54,7 +70,7 @@ const UserProvider = ({ children }) => {
   }, []);
 
   return (
-    <UserContext.Provider value={{ userLoading: loading, emailSignup }}>
+    <UserContext.Provider value={{ userLoading: loading, emailSignup, emailLogin }}>
       {children}
     </UserContext.Provider>
   );

@@ -3,33 +3,26 @@ import React, { useContext, useEffect, useState } from 'react';
 import Layout from '../components/Layout';
 import { UserContext } from '../utilities/context/UserContext';
 
-const signup = ({ user }) => {
+const login = ({ user }) => {
   console.log(user);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
 
-  const { emailSignup } = useContext(UserContext);
+  const { emailLogin } = useContext(UserContext);
   return (
     <Layout user={user}>
-      <h1>Signup</h1>
+      <h1>Login</h1>
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          emailSignup(email, password, username);
+          emailLogin(email, password);
         }}>
         <input
           type='text'
           name='email'
           onChange={(e) => setEmail(e.target.value)}
           value={email}
-          required
-        />
-        <input
-          type='text'
-          name='username'
-          onChange={(e) => setUsername(e.target.value)}
-          value={username}
           required
         />
         <input
@@ -45,4 +38,4 @@ const signup = ({ user }) => {
   );
 };
 
-export default signup;
+export default login;

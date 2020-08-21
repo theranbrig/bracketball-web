@@ -16,7 +16,7 @@ const index = ({ children, user }) => {
   }, []);
 
   return (
-    <Layout>
+    <Layout user={user}>
       <h1>Hello</h1>
     </Layout>
   );

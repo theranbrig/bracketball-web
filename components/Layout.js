@@ -3,11 +3,11 @@ import React, { useContext, useEffect, useState } from 'react';
 import Navigation from './Navigation';
 import Scoreboard from './Scoreboard';
 
-const Layout = ({ children }) => {
+const Layout = ({ user, children }) => {
   return (
     <>
       <header>
-        <Navigation />
+        <Navigation user={user} />
       </header>
       <main className='bg-honeydew flex flex-row h-desktopFullBody'>
         <div className='w-1/4 h-desktopFullBody overflow-scroll'>
