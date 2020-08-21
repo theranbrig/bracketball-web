@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 
 import Layout from '../components/Layout';
+import Link from 'next/link';
 import { UserContext } from '../utilities/context/UserContext';
 
 const login = ({ user }) => {
@@ -12,28 +13,40 @@ const login = ({ user }) => {
   const { emailLogin } = useContext(UserContext);
   return (
     <Layout user={user}>
-      <h1>Login</h1>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          emailLogin(email, password);
-        }}>
-        <input
-          type='text'
-          name='email'
-          onChange={(e) => setEmail(e.target.value)}
-          value={email}
-          required
-        />
-        <input
-          type='password'
-          name='password'
-          onChange={(e) => setPassword(e.target.value)}
-          value={password}
-          required
-        />
-        <button type='submit'>Send</button>
-      </form>
+      <div className='w-1/3 flex flex-col justify-center items-center mx-auto'>
+        <h2 className='text-celadon text-3xl font-title mb-8'>Login</h2>
+        <form
+          className='w-full'
+          onSubmit={(e) => {
+            e.preventDefault();
+            emailLogin(email, password);
+          }}>
+          <label className='input-form-label'>Email Address</label>
+          <input
+            className='input-form'
+            id='email'
+            type='text'
+            name='email'
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
+            required
+          />
+          <label className='input-form-label'>Password</label>
+          <input
+            className='input-form'
+            id='password'
+            type='password'
+            name='password'
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
+            required
+          />
+          <button type='submit'>Send</button>
+        </form>
+        <Link href='/signup'>
+          <a>Not yet a member?</a>
+        </Link>
+      </div>
     </Layout>
   );
 };

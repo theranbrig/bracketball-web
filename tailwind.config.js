@@ -14,6 +14,9 @@ module.exports = {
         desktopNavHeight: '76px',
         desktopFullBody: 'calc(100vh - 76px)',
       },
+      width: {
+        button: '240px',
+      },
     },
     fontFamily: {
       logo: ['Graduate', '-apple-system', 'sans-serif'],

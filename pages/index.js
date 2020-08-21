@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 
 import Layout from '../components/Layout';
 import Scoreboard from '../components/Scoreboard';
+import Link from 'next/link';
 
 const index = ({ children, user }) => {
   console.log(user);
@@ -17,7 +18,10 @@ const index = ({ children, user }) => {
 
   return (
     <Layout user={user}>
-      <h1>Hello</h1>
+      <h2>Hello</h2>
+      <Link href='/tournament/create'>
+        <a>Create Tournament</a>
+      </Link>
     </Layout>
   );
 };

@@ -26,7 +26,16 @@ h6 {
 
 @tailwind components;
 
-h1 {
+.input-form {
+  @apply w-full block border-2 border-celadon text-prussian p-1 mb-4 rounded-lg;
+}
+
+.input-form-label {
+  @apply font-title text-prussian mb-2 text-lg;
+}
+
+.form-button {
+  
 }
 
 /* purgecss end ignore */
