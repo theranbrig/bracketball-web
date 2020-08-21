@@ -1,5 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
-import Navigation from '../components/Navigation';
+
+import Layout from '../components/Layout';
+import Scoreboard from '../components/Scoreboard';
 
 const index = () => {
   useEffect(() => {
@@ -12,7 +14,11 @@ const index = () => {
       });
   }, []);
 
-  return <Navigation />;
+  return (
+    <Layout>
+      <Scoreboard />
+    </Layout>
+  );
 };
 
 export default index;

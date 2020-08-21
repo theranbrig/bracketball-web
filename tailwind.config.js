@@ -7,7 +7,12 @@ module.exports = {
         celadon: '#457b9d',
         powder: '#a8dadc',
         honeydew: '#f1faee',
+        honeydewTransparent: '#f1faee84',
         imperial: '#e63946',
+      },
+      height: {
+        desktopNavHeight: '76px',
+        desktopFullBody: 'calc(100vh - 76px)',
       },
     },
     fontFamily: {
