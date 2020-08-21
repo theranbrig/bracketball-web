@@ -3,7 +3,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import Layout from '../components/Layout';
 import Scoreboard from '../components/Scoreboard';
 
-const index = () => {
+const index = ({ children, user }) => {
+  console.log(user);
   useEffect(() => {
     fetch(
       'http://site.api.espn.com/apis/site/v2/sports/basketball/mens-college-basketball/scoreboard?dates=20180213'
@@ -16,7 +17,7 @@ const index = () => {
 
   return (
     <Layout>
-      <Scoreboard />
+      <h1>Hello</h1>
     </Layout>
   );
 };

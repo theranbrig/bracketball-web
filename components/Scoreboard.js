@@ -9,8 +9,6 @@ const Scoreboard = () => {
     )
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
-
         setScores(data);
       });
   };
@@ -20,7 +18,7 @@ const Scoreboard = () => {
   }, []);
 
   return (
-    <div className='w-1/4 border-r-4 border-celadon py-6 h-desktopFullBody overflow-y-scroll bg-powder text-prussian'>
+    <div className='border-r-4 border-celadon py-6 bg-powder text-prussian'>
       {scores !== null ? (
         <>
           <div className='text-center text-prussian text-2xl'>
@@ -31,7 +29,9 @@ const Scoreboard = () => {
             const [home, away] = score.competitions[0].competitors;
             const { venue, groups } = score.competitions[0];
             return (
-              <div className='px-4 py-2 m-4 text-base border-2 rounded-lg border-celadon font-normal font-body bg-honeydew tracking-wide'>
+              <div
+                className='px-4 py-2 m-4 text-base border-2 rounded-lg border-celadon font-normal font-body bg-honeydew tracking-wide'
+                key={score.id}>
                 <p className='text-xs text-center'>{score.name}</p>
                 <div className='grid grid-cols-3 justify-around items-center'>
                   <div className={` ${away.winner && 'font-bold'} mt-2`}>
