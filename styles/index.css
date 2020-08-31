@@ -39,7 +39,21 @@ h6 {
 }
 
 button:disabled {
-  opacity: 0.50;
+  opacity: 0.5;
+}
+.Toastify__toast, .Toastify__toast--default {
+  padding: 8px 20px !important;
+  border-radius: 10px !important;
+  background: white!important;
+  border: 1px solid #FF926B !i
+}
+.Toastify__toast-body {
+  color: #1d3557 !important;
+}
+.Toastify__progress-bar,
+.Toastify__progress-bar--animated,
+.Toastify__progress-bar--default {
+  background: linear-gradient(to right, #1d3557, #457b9d, #a8dadc) !important;
 }
 
 /* purgecss end ignore */

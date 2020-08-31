@@ -6,12 +6,11 @@ import LoadingModal from '../components/LoadingModal';
 import { UserContext } from '../utilities/context/UserContext';
 
 const login = ({ user }) => {
-  console.log(user);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
 
-  const { emailLogin, userLoading } = useContext(UserContext);
+  const { emailLogin, userLoading, userError } = useContext(UserContext);
   return (
     <>
       <Layout user={user}>
@@ -55,6 +54,7 @@ const login = ({ user }) => {
           </Link>
         </div>
       </Layout>
+
       {userLoading ? <LoadingModal /> : null}
     </>
   );

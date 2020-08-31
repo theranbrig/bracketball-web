@@ -1,5 +1,7 @@
 import '../styles/index.css';
 import 'react-datepicker/dist/react-datepicker.css';
+import 'react-toastify/dist/ReactToastify.css';
+
 import { useEffect, useState } from 'react';
 
 import App from 'next/app';
