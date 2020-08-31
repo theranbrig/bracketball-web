@@ -14,18 +14,25 @@ const FirebaseActionProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
-  const createTournament = (name, type, players, date, creator) => {
+  const createTournament = (name, type, players, date, owner) => {
+    setLoading(true);
     dbh
       .collection('tournaments')
-      .set({ name, type, players, date, creator })
+      .add({ name, type.value, players, date, owner, users: [owner] })
       .then(() => {
         console.log('TOURNAMENT CREATED');
+        setLoading(false);
       })
       .catch((err) => {
         createErrorToast(err.message);
+        setLoading(false);
       });
   };
-  return <FirebaseActionContext.Provider value={{createTournament, firebaseLoading}}>{children}</FirebaseActionContext.Provider>;
+  return (
+    <FirebaseActionContext.Provider value={{ createTournament, firebaseLoading: loading }}>
+      {children}
+    </FirebaseActionContext.Provider>
+  );
 };
 
 export default FirebaseActionProvider;
