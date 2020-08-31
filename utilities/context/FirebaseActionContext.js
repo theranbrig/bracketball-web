@@ -42,6 +42,7 @@ const FirebaseActionProvider = ({ children }) => {
           tournaments.push({ id: doc.id, ...doc.data() });
         });
         setMyTournaments(tournaments);
+        setLoading(false);
       });
   };
 
