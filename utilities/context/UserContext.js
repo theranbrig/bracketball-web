@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 
 import cookie from 'js-cookie';
 import firebase from '../firebaseSetup';
-import { tokenName } from '../constants';
 import { toast } from 'react-toastify';
-
+import { tokenName } from '../constants';
+import { createErrorToast } from '../errorFunctions';
 export const UserContext = React.createContext();
 
 const dbh = firebase.firestore();
@@ -13,21 +13,6 @@ const UserProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const createErrorToast = (text) => {
-    toast(text, {
-      position: 'bottom-right',
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      className: 'rounded-lg',
-      style: {
-        borderRadius: '10px',
-      },
-    });
-  };
   const emailSignup = async (email, password, username) => {
     setLoading(true);
     await firebase

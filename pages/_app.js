@@ -5,6 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useEffect, useState } from 'react';
 
 import App from 'next/app';
+import FirebaseActionContext from '../utilities/context/FirebaseActionContext';
 import Head from 'next/head';
 import UserContext from '../utilities/context/UserContext';
 import cookies from 'next-cookies';
@@ -49,10 +50,11 @@ function MyApp({ Component, pageProps, user }) {
         <meta property='twitter:description' content='YZED: Check out unique 3D and AR fashion.' />
         <link rel='manifest' href='manifest.json' />
       </Head>
-
-      <UserContext>
-        <Component {...pageProps} user={user} userData={userData} />
-      </UserContext>
+      <FirebaseActionContext>
+        <UserContext>
+          <Component {...pageProps} user={user} userData={userData} />
+        </UserContext>
+      </FirebaseActionContext>
 
       <noscript>
         <iframe

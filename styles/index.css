@@ -45,7 +45,7 @@ button:disabled {
   padding: 8px 20px !important;
   border-radius: 10px !important;
   background: white!important;
-  border: 1px solid #FF926B !i
+  border: 1px solid #FF926B !important;
 }
 .Toastify__toast-body {
   color: #1d3557 !important;

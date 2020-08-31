@@ -27,7 +27,6 @@ const Layout = ({ user, children }) => {
             draggable
             pauseOnHover
           />
-
         </div>
       </main>
     </>
