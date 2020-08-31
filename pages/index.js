@@ -6,6 +6,7 @@ import TournamentList from '../components/TournamentList';
 import Link from 'next/link';
 import LoadingModal from '../components/LoadingModal'
 import { FirebaseActionContext } from '../utilities/context/FirebaseActionContext';
+import {motion} from 'framer-motion'
 
 const index = ({ children, user }) => {
   const { getTournaments, myTournaments, firebaseLoading } = useContext(FirebaseActionContext);

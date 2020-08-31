@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 const LoadingModal = ({ text }) => {
   return (
     <>
-      <div className='fixed top-0 left-0 min-w-full min-h-screen flex justify-center items-center bg-celadonTransparent'>
+      <div className=' min-w-full min-h-screen flex justify-center items-center bg-celadonTransparent'>
         <div className='flex flex-col text-center'>
           <div className='sk-cube-grid'>
             <div className='sk-cube sk-cube1'></div>

@@ -11,7 +11,7 @@ export const FirebaseActionContext = React.createContext();
 const dbh = firebase.firestore();
 
 const FirebaseActionProvider = ({ children }) => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [myTournaments, setMyTournaments] = useState([]);
 
