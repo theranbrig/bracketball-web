@@ -54,7 +54,7 @@ const create = ({ user }) => {
             className='w-full block border-2 border-celadon text-prussian mb-4 rounded-lg'
             styles={customSelectStyles}
             value={type}
-            onChange={(value) => setType(value)}
+            onChange={(value) => setType(value.value)}
           />
           <label className='input-form-label'>Number of Players</label>
           <Select
@@ -63,7 +63,7 @@ const create = ({ user }) => {
             className='w-full block border-2 border-celadon text-prussian mb-4 rounded-lg'
             styles={customSelectStyles}
             value={players}
-            onChange={(value) => setPlayers(value)}
+            onChange={(value) => setPlayers(value.value)}
           />
           <label className='input-form-label block'>Start Date</label>
           <DatePicker

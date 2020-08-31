@@ -13,12 +13,13 @@ const dbh = firebase.firestore();
 const FirebaseActionProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [myTournaments, setMyTournaments] = useState([]);
 
   const createTournament = (name, type, players, date, owner) => {
     setLoading(true);
     dbh
       .collection('tournaments')
-      .add({ name, type.value, players, date, owner, users: [owner] })
+      .add({ name, type, players, date, owner, users: [owner] })
       .then(() => {
         console.log('TOURNAMENT CREATED');
         setLoading(false);
@@ -28,8 +29,25 @@ const FirebaseActionProvider = ({ children }) => {
         setLoading(false);
       });
   };
+
+  const getTournaments = (user) => {
+    setLoading(true);
+    dbh
+      .collection('tournaments')
+      .where('users', 'array-contains', user)
+      .onSnapshot((querySnapshot) => {
+        let tournaments = [];
+        querySnapshot.docs.forEach((doc) => {
+          console.log(doc.id);
+          tournaments.push({ id: doc.id, ...doc.data() });
+        });
+        setMyTournaments(tournaments);
+      });
+  };
+
   return (
-    <FirebaseActionContext.Provider value={{ createTournament, firebaseLoading: loading }}>
+    <FirebaseActionContext.Provider
+      value={{ createTournament, firebaseLoading: loading, getTournaments, myTournaments }}>
       {children}
     </FirebaseActionContext.Provider>
   );
