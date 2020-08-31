@@ -35,7 +35,11 @@ h6 {
 }
 
 .form-button {
-  
+  @apply text-lg text-prussian border-2 border-celadon mx-auto font-title bg-powder rounded-lg w-button py-2 block;
+}
+
+button:disabled {
+  opacity: 0.50;
 }
 
 /* purgecss end ignore */

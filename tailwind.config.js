@@ -5,6 +5,7 @@ module.exports = {
       colors: {
         prussian: '#1d3557',
         celadon: '#457b9d',
+        celadonTransparent: '#457b9df3',
         powder: '#a8dadc',
         honeydew: '#f1faee',
         honeydewTransparent: '#f1faee84',
