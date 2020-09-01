@@ -13,8 +13,10 @@ const index = ({ children, user }) => {
 
   return (
     <Layout user={user}>
-      {user ? <TournamentList user={user} /> : null}
-      {firebaseLoading ? <LoadingModal /> : null}
+      <div className='relative w-full h-desktopFullBody'>
+        {user ? <TournamentList user={user} /> : null}
+        {firebaseLoading ? <LoadingModal /> : null}
+      </div>
     </Layout>
   );
 };

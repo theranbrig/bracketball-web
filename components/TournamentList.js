@@ -16,14 +16,10 @@ const TournamentList = ({ user }) => {
   useEffect(() => {
     getTournaments(user.uid);
     setTotalPages(Math.ceil(myTournaments.length / itemsPerPage));
-    console.log(currentPage);
-    console.log(totalPages);
   }, []);
 
   const handleChange = (page) => {
     setTotalPages(Math.ceil(myTournaments.length / itemsPerPage));
-    console.log(currentPage);
-    console.log(totalPages);
     if (currentPage > 0 || currentPage < totalPages) {
       setCurrentPage(currentPage + page);
     }

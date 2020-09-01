@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 const LoadingModal = ({ text }) => {
   return (
     <>
-      <div className=' min-w-full min-h-screen flex justify-center items-center bg-celadonTransparent'>
+      <div className=' min-w-full min-h-screen absolute top-0 left-0 flex justify-center items-center bg-celadonTransparent h-desktopFullBody'>
         <div className='flex flex-col text-center'>
           <div className='sk-cube-grid'>
             <div className='sk-cube sk-cube1'></div>
@@ -23,7 +23,7 @@ const LoadingModal = ({ text }) => {
         .sk-cube-grid {
           width: 120px;
           height: 120px;
-          margin: 100px auto 50px;
+          margin: 0px auto 50px;
         }
         .sk-cube-grid .sk-cube {
           background-color: #a8dadc;

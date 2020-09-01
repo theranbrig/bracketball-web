@@ -22,7 +22,7 @@ const FirebaseActionProvider = ({ children }) => {
       .collection('tournaments')
       .add({ name, type, players, date, owner, users: [owner] })
       .then(() => {
-        console.log('TOURNAMENT CREATED');
+
         setLoading(false);
       })
       .catch((err) => {
@@ -39,13 +39,11 @@ const FirebaseActionProvider = ({ children }) => {
       .onSnapshot((querySnapshot) => {
         let tournaments = [];
         querySnapshot.docs.forEach((doc) => {
-          console.log(doc.id);
           tournaments.push({ id: doc.id, ...doc.data() });
         });
         setMyTournaments(tournaments);
         setLoading(false);
       });
-    setLoading(false);
   };
 
   return (
