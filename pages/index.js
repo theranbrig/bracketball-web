@@ -13,11 +13,7 @@ const index = ({ children, user }) => {
 
   return (
     <Layout user={user}>
-      <h2>My Pools</h2>
       {user ? <TournamentList user={user} /> : null}
-      <Link href='/tournament/create'>
-          <a>Create Tournament</a>
-      </Link>
       {firebaseLoading ? <LoadingModal /> : null}
     </Layout>
   );

@@ -14,7 +14,7 @@ const Layout = ({ user, children }) => {
         <div className='w-1/4 h-desktopFullBody overflow-scroll'>
           <Scoreboard />
         </div>
-        <div className='w-3/4 h-desktopFullBody overflow-scroll flex flex-col justify-center items-center'>
+        <div className='w-3/4 h-desktopFullBody overflow-scroll'>
           {children}
           <ToastContainer
             position='bottom-right'
