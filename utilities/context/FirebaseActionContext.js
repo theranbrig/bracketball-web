@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import { tokenName } from '../constants';
 import { createErrorToast } from '../errorFunctions';
 
+
 export const FirebaseActionContext = React.createContext();
 
 const dbh = firebase.firestore();
@@ -44,6 +45,7 @@ const FirebaseActionProvider = ({ children }) => {
         setMyTournaments(tournaments);
         setLoading(false);
       });
+    setLoading(false);
   };
 
   return (

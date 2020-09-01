@@ -33,10 +33,10 @@ const Scoreboard = () => {
                 exit={{ opacity: 0, scale: 0 }}
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ type: 'spring', ease: 'easeIn', duration: 1, mass: 0.5 }}>
+                transition={{ type: 'spring', ease: 'easeIn', duration: 1, mass: 0.5 }} key={score.id}>
                 <div
                   className='px-4 py-2 m-4 text-base border-2 rounded-lg border-celadon font-normal font-body bg-honeydew tracking-wide'
-                  key={score.id}>
+                 >
                   <p className='text-xs text-center'>{score.name}</p>
                   <div className='grid grid-cols-3 justify-around items-center'>
                     <div className={` ${away.winner && 'font-bold'} mt-2`}>

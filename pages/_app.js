@@ -13,12 +13,8 @@ import fetch from 'isomorphic-unfetch';
 import { server } from '../utilities/constants';
 
 function MyApp({ Component, pageProps, user }) {
-  const [userData, setUserData] = useState(user);
-  useEffect(() => {
-    if (!user) {
-      document.cookie = `foo=; path=firebaseToken; expires=Thu, 01 Jan 1970 00:00:01 GMT`;
-    }
-  }, []);
+  console.log(user);
+
   return (
     <>
       <Head>
@@ -52,7 +48,7 @@ function MyApp({ Component, pageProps, user }) {
       </Head>
       <FirebaseActionContext>
         <UserContext>
-          <Component {...pageProps} user={user} userData={userData} />
+          <Component {...pageProps} user={user} />
         </UserContext>
       </FirebaseActionContext>
 
@@ -78,28 +74,30 @@ function MyApp({ Component, pageProps, user }) {
 // be server-side rendered.
 //
 MyApp.getInitialProps = async (appContext) => {
+  console.log('I WAS CALLED');
   const { ctx } = appContext;
   // calls page's `getInitialProps` and fills `appProps.pageProps`
   let error;
-  const appProps = await App.getInitialProps(appContext);
-  if (typeof window === 'undefined') {
-    const { firebaseToken } = cookies(ctx);
-    if (firebaseToken) {
-      try {
-        const headers = {
-          'Context-Type': 'application/json',
-          Authorization: JSON.stringify({ token: firebaseToken }),
-        };
 
-        const result = await fetch(`${server}/api/validate`, { headers }).then((res) => res.json());
-        return { ...result, ...appProps };
-      } catch (e) {
-        console.log('ERRRRRR', e);
-        // document.cookie = `foo=; path=firebaseToken; expires=Thu, 01 Jan 1970 00:00:01 GMT`;
-      }
+  const appProps = await App.getInitialProps(appContext);
+
+  const { firebaseToken } = await cookies(ctx);
+  console.log('CONTEXT', appProps);
+  console.log('TOKEN', firebaseToken);
+  if (firebaseToken) {
+    try {
+      const headers = {
+        'Context-Type': 'application/json',
+        Authorization: JSON.stringify({ token: firebaseToken }),
+      };
+
+      const result = await fetch(`${server}/api/validate`, { headers }).then((res) => res.json());
+      return { ...result, ...appProps };
+    } catch (e) {
+      console.log('ERRRRRR', e);
+      // document.cookie = `foo=; path=firebaseToken; expires=Thu, 01 Jan 1970 00:00:01 GMT`;
     }
   }
-
   return { ...appProps };
 };
 

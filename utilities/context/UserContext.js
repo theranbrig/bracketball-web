@@ -5,6 +5,8 @@ import firebase from '../firebaseSetup';
 import { toast } from 'react-toastify';
 import { tokenName } from '../constants';
 import { createErrorToast } from '../errorFunctions';
+import { useRouter } from 'next/router';
+
 export const UserContext = React.createContext();
 
 const dbh = firebase.firestore();
@@ -12,6 +14,8 @@ const dbh = firebase.firestore();
 const UserProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  const router = useRouter();
 
   const emailSignup = async (email, password, username) => {
     setLoading(true);
@@ -27,7 +31,10 @@ const UserProvider = ({ children }) => {
             .collection('users')
             .doc(userID)
             .set({ email, username })
-            .then(() => setLoading(false))
+            .then(() => {
+              router.reload();
+              setLoading(false);
+            })
             .catch((err) => setError(err));
         }
       })

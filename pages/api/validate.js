@@ -33,6 +33,7 @@ export default async (req, res) => {
   try {
     const { token } = JSON.parse(req.headers.authorization || '{}');
     if (!token) {
+      console.log('NO TOKEN');
       return res.status(403).send({
         errorCode: 403,
         message: 'Auth token missing.',
