@@ -4,6 +4,7 @@ import Layout from '../components/Layout';
 import Link from 'next/link';
 import LoadingModal from '../components/LoadingModal';
 import { UserContext } from '../utilities/context/UserContext';
+import FormTitle from '../components/FormTitle';
 
 const login = ({ user }) => {
   const [email, setEmail] = useState('');
@@ -16,7 +17,7 @@ const login = ({ user }) => {
       <Layout user={user}>
         <div className='h-desktopFullBody flex flex-col justify-center items-center'>
           <div className='w-1/3 flex flex-col justify-center items-center mx-auto'>
-            <h2 className='text-celadon text-3xl font-title mb-8'>Login</h2>
+            <FormTitle title='Login' />
             <form
               className='w-full'
               onSubmit={(e) => {

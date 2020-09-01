@@ -3,11 +3,20 @@ import React, { useEffect, useContext, useState } from 'react';
 import BackButton from './buttons/BackButton';
 const FormTitle = ({ title }) => {
   return (
-    <div className='flex flex-row justify-between w-full'>
-      <BackButton />
-      <h2>{title}</h2>
-      <div />
-    </div>
+    <>
+      <div className='flex flex-row justify-between items-center w-full mb-8'>
+        <div className='holder flex items-center'>
+          <BackButton />
+        </div>
+        <h2 className='text-celadon text-3xl font-title'>{title}</h2>
+        <div className='holder' />
+      </div>
+      <style jsx>{`
+        .holder {
+          width: 30px;
+        }
+      `}</style>
+    </>
   );
 };
 

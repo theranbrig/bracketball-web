@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import Layout from '../components/Layout';
 import Link from 'next/link';
 import { UserContext } from '../utilities/context/UserContext';
+import FormTitle from '../components/FormTitle';
 
 const signup = ({ user }) => {
   console.log(user);
@@ -16,7 +17,7 @@ const signup = ({ user }) => {
     <Layout user={user}>
       <div className='h-desktopFullBody flex flex-col justify-center items-center'>
         <div className='w-1/3 flex flex-col justify-center items-center mx-auto'>
-          <h2 className='text-celadon text-3xl font-title mb-8'>Signup</h2>
+          <FormTitle title='Create Account' />
           <form
             className='w-full'
             onSubmit={(e) => {

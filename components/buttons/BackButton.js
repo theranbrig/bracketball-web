@@ -6,10 +6,11 @@ const BackButton = () => {
   const router = useRouter();
   return (
     <button
+      aria-label='back'
       onClick={() => {
         router.back();
       }}>
-      <BsChevronLeft />
+      <BsChevronLeft color='#1d3557' size='1.5rem' />
     </button>
   );
 };

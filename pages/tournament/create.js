@@ -7,6 +7,7 @@ import Select from 'react-select';
 import { FirebaseActionContext } from '../../utilities/context/FirebaseActionContext';
 import { motion } from 'framer-motion';
 import BackButton from '../../components/buttons/BackButton';
+import FormTitle from '../../components/FormTitle';
 
 const create = ({ user }) => {
   const [name, setName] = useState('');
@@ -38,9 +39,8 @@ const create = ({ user }) => {
         animate={{ opacity: 1, scale: 1 }}
         transition={{ type: 'spring', ease: 'easeIn', duration: 1, mass: 0.5 }}>
         <div className='flex flex-col justify-center items-center h-desktopFullBody'>
-          <BackButton />
           <div className='w-1/3 flex flex-col justify-center items-center mx-auto'>
-            <h2 className='text-celadon text-3xl font-title mb-8'>Create Tournament</h2>
+            <FormTitle title="Create Pool"/>
             <form
               className='w-full'
               onSubmit={(e) => {
