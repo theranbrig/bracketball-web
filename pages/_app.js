@@ -95,7 +95,7 @@ MyApp.getInitialProps = async (appContext) => {
       return { ...result, ...appProps };
     } catch (e) {
       console.log('ERRRRRR', e);
-      // document.cookie = `foo=; path=firebaseToken; expires=Thu, 01 Jan 1970 00:00:01 GMT`;
+    
     }
   }
   return { ...appProps };
