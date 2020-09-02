@@ -15,6 +15,7 @@ module.exports = {
         desktopNavHeight: '76px',
         desktopFullBody: 'calc(100vh - 76px)',
         minGridHeight: '240px',
+        gridItemHeight: '120px',
       },
       width: {
         button: '240px',

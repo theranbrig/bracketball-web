@@ -60,9 +60,10 @@ const FirebaseActionProvider = ({ children }) => {
       });
   };
 
+
   return (
     <FirebaseActionContext.Provider
-      value={{ createTournament, firebaseLoading: loading, getTournaments, myTournaments }}>
+      value={{ createTournament, firebaseLoading: loading, getTournaments, myTournaments, dbh }}>
       {children}
     </FirebaseActionContext.Provider>
   );

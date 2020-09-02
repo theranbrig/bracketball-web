@@ -7,14 +7,21 @@ import Link from 'next/link';
 import LoadingModal from '../components/LoadingModal';
 import { FirebaseActionContext } from '../utilities/context/FirebaseActionContext';
 import { motion } from 'framer-motion';
+import CurrentShowingTournament from '../components/CurrentShowingTournament';
 
 const index = ({ children, user }) => {
+  const [currentShowingTournament, setCurrentShowingTournament] = useState('');
   const { getTournaments, myTournaments, firebaseLoading } = useContext(FirebaseActionContext);
 
   return (
     <Layout user={user}>
       <div className='relative w-full h-desktopFullBody'>
-        {user ? <TournamentList user={user} /> : null}
+        {user ? (
+          <>
+            <TournamentList user={user} setCurrentShowingTournament={setCurrentShowingTournament} />
+            <CurrentShowingTournament currentShowingTournament={currentShowingTournament} />
+          </>
+        ) : null}
         {firebaseLoading ? <LoadingModal /> : null}
       </div>
     </Layout>

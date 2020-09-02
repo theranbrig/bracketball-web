@@ -7,16 +7,19 @@ import Link from 'next/link';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import fromUnixTime from 'date-fns/fromUnixTime';
 import { motion } from 'framer-motion';
+import { HiOutlineInformationCircle, HiOutlineArrowCircleRight } from 'react-icons/hi';
 
-const TournamentList = ({ user }) => {
+const TournamentList = ({ user, setCurrentShowingTournament }) => {
   const itemsPerPage = 6;
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const { getTournaments, myTournaments, firebaseLoading } = useContext(FirebaseActionContext);
 
   useEffect(() => {
-    getTournaments(user.uid);
-    setTotalPages(Math.ceil(myTournaments.length / itemsPerPage));
+    if (user) {
+      getTournaments(user.uid);
+      setTotalPages(Math.ceil(myTournaments.length / itemsPerPage));
+    }
   }, []);
 
   const handleChange = (page) => {
@@ -51,7 +54,7 @@ const TournamentList = ({ user }) => {
             </button>
           </div>
         </div>
-        <div className='w-full grid grid-cols-3 grid-rows-2 gap-4 justify-center items-center px-4  h-minGridHeight'>
+        <div className='w-full grid grid-cols-3 grid-rows-2 gap-4 justify-center items-center px-4 h-minGridHeight'>
           {!firebaseLoading
             ? myTournaments
                 .slice(currentPage * itemsPerPage - itemsPerPage, currentPage * itemsPerPage)
@@ -68,25 +71,41 @@ const TournamentList = ({ user }) => {
                         display: 'flex',
                         flexDirection: 'column',
                         pointer: 'cursor',
+                        height: '120px',
                       }}
                       key={tournament.id}>
-                      <Link
-                        href='/tournament/[id]'
-                        as={`/tournament/${tournament.id}`}
-                        key={tournament.id}>
-                        <a className='border-powder border-2 rounded-lg p-4 bg-prussian text-honeydew'>
-                          <div className='mb-4'>
-                            <p className='uppercase text-base'>{tournament.name}</p>
-                            <p className='capitalize text-xs'>{tournament.type} Pool</p>
+                      <div className='h-gridItemHeight flex flex-col justify-between border-powder border-2 rounded-lg p-4 bg-prussian text-honeydew'>
+                        <div>
+                          <div className='flex flex-row justify-between w-full'>
+                            <div>
+                              <p className='uppercase text-base'>{tournament.name}</p>
+                              <p className='capitalize text-xs'>
+                                {tournament.type} Pool - {date}
+                              </p>
+                            </div>
+                            <Link
+                              href='/tournament/[id]'
+                              as={`/tournament/${tournament.id}`}
+                              key={tournament.id}>
+                              <a>
+                                <HiOutlineArrowCircleRight color='#f1faee' size='1.5rem' />
+                              </a>
+                            </Link>
                           </div>
-                          <div className='flex flex-row justify-between'>
-                            <p className='text-xs mr-16'>{`${tournament.members.length} Member${
-                              tournament.members.length !== 1 ? 's' : ''
-                            }`}</p>
-                            <p className='text-xs'>{date}</p>
-                          </div>
-                        </a>
-                      </Link>
+                        </div>
+                        <div className='flex flex-row justify-between items-center'>
+                          <p className='text-xs mr-16'>{`${tournament.members.length} Member${
+                            tournament.members.length !== 1 ? 's' : ''
+                          }`}</p>
+                          <button
+                            aria-label='show tournament information'
+                            onClick={() => {
+                              setCurrentShowingTournament(tournament.id);
+                            }}>
+                            <HiOutlineInformationCircle color='#f1faee' size='1.5rem' />
+                          </button>
+                        </div>
+                      </div>
                     </motion.div>
                   );
                 })
