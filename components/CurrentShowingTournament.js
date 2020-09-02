@@ -1,15 +1,17 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import { FirebaseActionContext } from '../utilities/context/FirebaseActionContext';
-import LoadingModal from './LoadingModal';
 import { ImStarEmpty } from 'react-icons/im';
+import LoadingModal from './LoadingModal';
 
 const CurrentShowingTournament = ({ currentShowingTournament }) => {
   const [tournament, setTournament] = useState(null);
   const [members, setMembers] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [inviteEmail, setInviteEmail] = useState('');
 
-  const { dbh } = useContext(FirebaseActionContext);
+  const { dbh, sendPoolInvitation } = useContext(FirebaseActionContext);
+
   useEffect(() => {
     if (currentShowingTournament) {
       setLoading(true);
@@ -18,7 +20,6 @@ const CurrentShowingTournament = ({ currentShowingTournament }) => {
         .doc(currentShowingTournament)
         .get()
         .then((doc) => {
-          console.log(doc.data());
           setTournament({ id: currentShowingTournament, ...doc.data() });
           dbh
             .collection('tournaments')
@@ -52,9 +53,25 @@ const CurrentShowingTournament = ({ currentShowingTournament }) => {
             {members.length < tournament.players ? (
               <>
                 <h3>Add Members</h3>
-                <form className='w-1/2'>
+                <form
+                  className='w-1/2'
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    sendPoolInvitation(inviteEmail, currentShowingTournament);
+                  }}>
                   <label className='input-form-label'>Email Address</label>
-                  <input className='input-form' />
+                  <input
+                    className='input-form'
+                    value={inviteEmail}
+                    onChange={(e) => setInviteEmail(e.target.value)}
+                    required
+                  />
+                  <button
+                    disabled={!inviteEmail}
+                    className='w-button bg-powder block rounded-lg border-2 border-celadon text-prussian py-1 mx-auto'
+                    type='submit'>
+                    Send Invite
+                  </button>
                 </form>
               </>
             ) : (

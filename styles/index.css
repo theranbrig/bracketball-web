@@ -41,7 +41,8 @@ h6 {
 button:disabled {
   opacity: 0.5;
 }
-.Toastify__toast,
+
+/* .Toastify__toast,
 .Toastify__toast--default {
   padding: 8px 20px !important;
   border-radius: 10px !important;
@@ -55,7 +56,8 @@ button:disabled {
 .Toastify__progress-bar--animated,
 .Toastify__progress-bar--default {
   background: linear-gradient(to right, #1d3557, #457b9d, #a8dadc) !important;
-}
+} */
+
 .tournament-list-item {
   flex: 1 0 21%;
   margin: 5px;

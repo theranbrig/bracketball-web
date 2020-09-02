@@ -67,26 +67,61 @@ const FirebaseActionProvider = ({ children }) => {
       .doc(tournamentId)
       .collection('memberDetails')
       .doc(user.uid);
-
     userDetailRef.get().then((doc) => {
       if (!doc.exists) {
-        dbh.collection('tournaments').doc(tournamentId).update({members: firebase.firestore.FieldValue.arrayUnion(user.uid)}).then(() => {
-          userDetailRef.set({ id: user.uid, username: user.username, role: 'USER' }).then(() => {
-            router.push('/');
-            setLoading(false);
+        dbh
+          .collection('tournaments')
+          .doc(tournamentId)
+          .update({ members: firebase.firestore.FieldValue.arrayUnion(user.uid) })
+          .then(() => {
+            userDetailRef.set({ id: user.uid, username: user.username, role: 'USER' }).then(() => {
+              router.push('/');
+              setLoading(false);
+            });
           });
-        })
       } else {
-        createErrorToast('You are already a member of this pool.');
+        createErrorToast('Already a member of this pool.');
       }
     });
   };
 
   const sendPoolInvitation = (email, tournamentId) => {
     let user = null;
-    dbh.collection('users').where('email', '==', email).get().then(querySnapshot => {querySnapshot.forEach(doc => console.log(query))})
+    dbh
+      .collection('users')
+      .where('email', '==', email)
+      .get()
+      .then((querySnapshot) => {
+        if (querySnapshot.docs.length) {
+          const user = { uid: querySnapshot.docs[0].id, ...querySnapshot.docs[0].data() };
+          // Check if user is a part of the pool
+          console.log(user);
+          dbh
+            .collection('tournaments')
+            .doc(tournamentId)
+            .collection('memberDetails')
+            .doc(user.uid)
+            .get()
+            .then((doc) => {
+              // If part of the pool set error
+              if (doc.exists) {
+                createErrorToast('User is already in pool.');
+              } else {
+                // Check if invitation exists
+                dbh.collection('poolInvitations').where('user', '==', user.uid).where('tournamentId', '==', tournamentId).get().then(querySnapshot => {if(querySnapshot.docs.length) {
+createErrorToast('Invitation to tournament already sent.')
+                } else {
+                  // If not in the pool or no invite then create invite
+                  dbh.collection('poolInvitations').add({user: user.uid, tournamentId}).then(() => {console.log("Invitation Sent")})
 
-  }
+                }})
+              }
+            });
+        } else {
+          createErrorToast('No user found with that email address.');
+        }
+      });
+  };
 
   return (
     <FirebaseActionContext.Provider
@@ -97,6 +132,7 @@ const FirebaseActionProvider = ({ children }) => {
         myTournaments,
         joinTournament,
         dbh,
+        sendPoolInvitation,
       }}>
       {children}
     </FirebaseActionContext.Provider>
