@@ -60,10 +60,44 @@ const FirebaseActionProvider = ({ children }) => {
       });
   };
 
+  const joinTournament = (user, tournamentId) => {
+    setLoading(true);
+    const userDetailRef = dbh
+      .collection('tournaments')
+      .doc(tournamentId)
+      .collection('memberDetails')
+      .doc(user.uid);
+
+    userDetailRef.get().then((doc) => {
+      if (!doc.exists) {
+        dbh.collection('tournaments').doc(tournamentId).update({members: firebase.firestore.FieldValue.arrayUnion(user.uid)}).then(() => {
+          userDetailRef.set({ id: user.uid, username: user.username, role: 'USER' }).then(() => {
+            router.push('/');
+            setLoading(false);
+          });
+        })
+      } else {
+        createErrorToast('You are already a member of this pool.');
+      }
+    });
+  };
+
+  const sendPoolInvitation = (email, tournamentId) => {
+    let user = null;
+    dbh.collection('users').where('email', '==', email).get().then(querySnapshot => {querySnapshot.forEach(doc => console.log(query))})
+
+  }
 
   return (
     <FirebaseActionContext.Provider
-      value={{ createTournament, firebaseLoading: loading, getTournaments, myTournaments, dbh }}>
+      value={{
+        createTournament,
+        firebaseLoading: loading,
+        getTournaments,
+        myTournaments,
+        joinTournament,
+        dbh,
+      }}>
       {children}
     </FirebaseActionContext.Provider>
   );

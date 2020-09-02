@@ -14,8 +14,9 @@ const create = ({ user }) => {
   const [type, setType] = useState(null);
   const [players, setPlayers] = useState(null);
   const [date, setDate] = useState(new Date());
+  const [currentTournamentId, setCurrentTournamentId] = useState('');
 
-  const { createTournament } = useContext(FirebaseActionContext);
+  const { createTournament, joinTournament } = useContext(FirebaseActionContext);
 
   const customSelectStyles = {
     container: (provided, state) => ({
@@ -40,7 +41,33 @@ const create = ({ user }) => {
         transition={{ type: 'spring', ease: 'easeIn', duration: 1, mass: 0.5 }}>
         <div className='flex flex-col justify-center items-center h-desktopFullBody'>
           <div className='w-1/3 flex flex-col justify-center items-center mx-auto'>
-            <FormTitle title="Create Pool"/>
+            <FormTitle title='Join Pool' />
+            <form
+              className='w-full'
+              onSubmit={(e) => {
+                e.preventDefault();
+                joinTournament(user, currentTournamentId);
+              }}>
+              {' '}
+              <label className='input-form-label'>Tournament ID</label>
+              <input
+                className='input-form'
+                id='tournament id'
+                value={currentTournamentId}
+                onChange={(e) => {
+                  setCurrentTournamentId(e.target.value);
+                }}
+                required
+              />
+              <button
+                disabled={!currentTournamentId}
+                className='w-button bg-powder block rounded-lg border-2 border-celadon text-prussian py-1 mx-auto'
+                type='submit'>
+                Join
+              </button>
+            </form>
+            <p className='my-4'>or</p>
+            <h2 className='text-celadon text-3xl font-title'>Create Pool</h2>
             <form
               className='w-full'
               onSubmit={(e) => {
