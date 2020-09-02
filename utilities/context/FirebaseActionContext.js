@@ -75,6 +75,7 @@ const FirebaseActionProvider = ({ children }) => {
           .update({ members: firebase.firestore.FieldValue.arrayUnion(user.uid) })
           .then(() => {
             userDetailRef.set({ id: user.uid, username: user.username, role: 'USER' }).then(() => {
+              // TODO: DELETE ANY INVITES THAT MAY EXIST
               router.push('/');
               setLoading(false);
             });
@@ -108,13 +109,24 @@ const FirebaseActionProvider = ({ children }) => {
                 createErrorToast('User is already in pool.');
               } else {
                 // Check if invitation exists
-                dbh.collection('poolInvitations').where('user', '==', user.uid).where('tournamentId', '==', tournamentId).get().then(querySnapshot => {if(querySnapshot.docs.length) {
-createErrorToast('Invitation to tournament already sent.')
-                } else {
-                  // If not in the pool or no invite then create invite
-                  dbh.collection('poolInvitations').add({user: user.uid, tournamentId}).then(() => {console.log("Invitation Sent")})
-
-                }})
+                dbh
+                  .collection('poolInvitations')
+                  .where('user', '==', user.uid)
+                  .where('tournamentId', '==', tournamentId)
+                  .get()
+                  .then((querySnapshot) => {
+                    if (querySnapshot.docs.length) {
+                      createErrorToast('Invitation to tournament already sent.');
+                    } else {
+                      // If not in the pool or no invite then create invite
+                      dbh
+                        .collection('poolInvitations')
+                        .add({ user: user.uid, tournamentId })
+                        .then(() => {
+                          console.log('Invitation Sent');
+                        });
+                    }
+                  });
               }
             });
         } else {
