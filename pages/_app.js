@@ -74,16 +74,11 @@ function MyApp({ Component, pageProps, user }) {
 // be server-side rendered.
 //
 MyApp.getInitialProps = async (appContext) => {
-  console.log('I WAS CALLED');
   const { ctx } = appContext;
   // calls page's `getInitialProps` and fills `appProps.pageProps`
   let error;
-
   const appProps = await App.getInitialProps(appContext);
-
   const { firebaseToken } = await cookies(ctx);
-  console.log('CONTEXT', appProps);
-  console.log('TOKEN', firebaseToken);
   if (firebaseToken) {
     try {
       const headers = {
@@ -94,8 +89,7 @@ MyApp.getInitialProps = async (appContext) => {
       const result = await fetch(`${server}/api/validate`, { headers }).then((res) => res.json());
       return { ...result, ...appProps };
     } catch (e) {
-      console.log('ERRRRRR', e);
-    
+      console.log(e);
     }
   }
   return { ...appProps };

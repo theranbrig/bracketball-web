@@ -1,11 +1,12 @@
-import React, { useEffect, useContext, useState } from 'react';
-import Link from 'next/link';
+import { BsChevronLeft, BsChevronRight, BsPlusCircle } from 'react-icons/bs';
+import React, { useContext, useEffect, useState } from 'react';
+import { compareAsc, format } from 'date-fns';
+
 import { FirebaseActionContext } from '../utilities/context/FirebaseActionContext';
-import { motion } from 'framer-motion';
-import fromUnixTime from 'date-fns/fromUnixTime';
-import { BsChevronRight, BsChevronLeft, BsPlusCircle } from 'react-icons/bs';
-import { format, compareAsc } from 'date-fns';
+import Link from 'next/link';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
+import fromUnixTime from 'date-fns/fromUnixTime';
+import { motion } from 'framer-motion';
 
 const TournamentList = ({ user }) => {
   const itemsPerPage = 6;
@@ -55,6 +56,7 @@ const TournamentList = ({ user }) => {
             ? myTournaments
                 .slice(currentPage * itemsPerPage - itemsPerPage, currentPage * itemsPerPage)
                 .map((tournament) => {
+                  console.log(tournament);
                   const date = formatDistanceToNow(fromUnixTime(tournament.date.seconds));
                   return (
                     <motion.div
@@ -72,25 +74,24 @@ const TournamentList = ({ user }) => {
                         href='/tournament/[id]'
                         as={`/tournament/${tournament.id}`}
                         key={tournament.id}>
-                        <div className='border-powder border-2 rounded-lg p-4 bg-prussian text-honeydew'>
+                        <a className='border-powder border-2 rounded-lg p-4 bg-prussian text-honeydew'>
                           <div className='mb-4'>
                             <p className='uppercase text-base'>{tournament.name}</p>
                             <p className='capitalize text-xs'>{tournament.type} Pool</p>
                           </div>
                           <div className='flex flex-row justify-between'>
-                            <p className='text-xs mr-16'>{`${tournament.users.length} Member${
-                              tournament.users.length !== 1 ? 's' : ''
+                            <p className='text-xs mr-16'>{`${tournament.members.length} Member${
+                              tournament.members.length !== 1 ? 's' : ''
                             }`}</p>
                             <p className='text-xs'>{date}</p>
                           </div>
-                        </div>
+                        </a>
                       </Link>
                     </motion.div>
                   );
                 })
             : null}
         </div>
-
       </div>
     </>
   );

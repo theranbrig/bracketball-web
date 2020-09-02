@@ -45,7 +45,7 @@ const create = ({ user }) => {
               className='w-full'
               onSubmit={(e) => {
                 e.preventDefault();
-                createTournament(name, type.value, players.value, date, user.uid);
+                createTournament(name, type.value, players.value, date, user);
               }}>
               <label className='input-form-label'>Tournament Name</label>
               <input

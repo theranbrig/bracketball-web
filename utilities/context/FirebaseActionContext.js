@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 
 import cookie from 'js-cookie';
+import { createErrorToast } from '../errorFunctions';
 import firebase from '../firebaseSetup';
 import { toast } from 'react-toastify';
 import { tokenName } from '../constants';
-import { createErrorToast } from '../errorFunctions';
-
+import { useRouter } from 'next/router';
 
 export const FirebaseActionContext = React.createContext();
 
@@ -16,14 +16,28 @@ const FirebaseActionProvider = ({ children }) => {
   const [error, setError] = useState(false);
   const [myTournaments, setMyTournaments] = useState([]);
 
+  const router = useRouter();
   const createTournament = (name, type, players, date, owner) => {
     setLoading(true);
     dbh
       .collection('tournaments')
-      .add({ name, type, players, date, owner, users: [owner] })
-      .then(() => {
-
-        setLoading(false);
+      .add({ name, type, players, date, owner: owner.uid, members: [owner.uid] })
+      .then((doc) => {
+        dbh
+          .collection('tournaments')
+          .doc(doc.id)
+          .collection('memberDetails')
+          .doc(owner.uid)
+          .set({ id: owner.uid, username: owner.username, status: 'OWNER' })
+          .then(() => {
+            router.push('/');
+            setLoading(false);
+          })
+          .catch((err) => {
+            console.log(err);
+            createErrorToast(err.message);
+            setLoading(false);
+          });
       })
       .catch((err) => {
         createErrorToast(err.message);
@@ -35,7 +49,7 @@ const FirebaseActionProvider = ({ children }) => {
     setLoading(true);
     dbh
       .collection('tournaments')
-      .where('users', 'array-contains', user)
+      .where('members', 'array-contains', user)
       .onSnapshot((querySnapshot) => {
         let tournaments = [];
         querySnapshot.docs.forEach((doc) => {
