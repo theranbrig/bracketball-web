@@ -44,17 +44,7 @@ const CurrentShowingTournament = ({ currentShowingTournament }) => {
       {loading ? <LoadingModal /> : null}
       {tournament ? (
         <>
-          <p>{tournament.name}</p>
-          {members.map((member) => (
-            <p className='flex flex-row items-center'>
-              {member.role === 'OWNER' ? (
-                <ImStarEmpty className='inline-block mr-2' />
-              ) : (
-                <RiUser3Line className='inline-block mr-2' />
-              )}
-              {member.username}
-            </p>
-          ))}
+          <h2 className='text-3xl my-4 text-prussian text-center'>{tournament.name}</h2>
           {members.length ? <StandingsTable members={members} /> : null}
           <div>
             {members.length < tournament.players ? (

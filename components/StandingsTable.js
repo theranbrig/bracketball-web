@@ -1,5 +1,3 @@
-
-
 import { useTable } from 'react-table';
 import { ImStarEmpty } from 'react-icons/im';
 import { RiUser3Line } from 'react-icons/ri';
@@ -18,14 +16,6 @@ const StandingsTable = ({ members }) => {
   const columns = React.useMemo(
     () => [
       {
-        Header: 'User',
-        accessor: 'username', // accessor is the "key" in the data
-      },
-      {
-        Header: 'Points',
-        accessor: 'points',
-      },
-      {
         Header: ' ',
         accessor: (member) =>
           member.role === 'OWNER' ? (
@@ -33,6 +23,17 @@ const StandingsTable = ({ members }) => {
           ) : (
             <RiUser3Line className='inline-block mr-2' />
           ),
+      },
+      {
+        Header: 'User',
+        accessor: 'username', // accessor is the "key" in the data
+      },
+      {
+        Header: 'Points',
+        accessor: 'points',
+        style: {
+          textAlign: 'right',
+        },
       },
     ],
     []
@@ -44,7 +45,7 @@ const StandingsTable = ({ members }) => {
   });
 
   return (
-    <table className='w-11/12 lg:w-1/2 mx-auto ' {...getTableProps()}>
+    <table className='w-11/12 lg:w-1/2 mx-auto mb-8' {...getTableProps()}>
       <thead>
         {headerGroups.map((headerGroup) => (
           <tr {...headerGroup.getHeaderGroupProps()}>
