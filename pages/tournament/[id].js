@@ -11,7 +11,11 @@ const tournament = ({ user, tournament, players }) => {
         <div className='my-4 w-1/2'>
           <FormTitle title={tournament.name} />
         </div>
-  <div>{players.map(player => <p>{player.username}</p>)}</div>
+        <div>
+          {players.map((player) => (
+            <p>{player.username}</p>
+          ))}
+        </div>
       </div>
     </Layout>
   );

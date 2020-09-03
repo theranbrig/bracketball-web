@@ -28,7 +28,7 @@ const FirebaseActionProvider = ({ children }) => {
           .doc(doc.id)
           .collection('memberDetails')
           .doc(owner.uid)
-          .set({ id: owner.uid, username: owner.username, role: 'OWNER' })
+          .set({ id: owner.uid, username: owner.username, role: 'OWNER', points: 0 })
           .then(() => {
             router.push('/');
             setLoading(false);
@@ -89,7 +89,7 @@ const FirebaseActionProvider = ({ children }) => {
                       .doc(tournamentId)
                       .collection('memberDetails')
                       .doc(user.uid)
-                      .set({ id: user.uid, username: user.username, role: 'USER' })
+                      .set({ id: user.uid, username: user.username, role: 'USER', points: 0 })
                       .then(() => {
                         // Delete any invitations with this user and tournament
                         dbh
@@ -100,7 +100,7 @@ const FirebaseActionProvider = ({ children }) => {
                           .then((querySnapshot) => {
                             querySnapshot.forEach((doc) => {
                               const { id } = doc;
-                  
+
                               removeInvitation(id);
                             });
                             setLoading(false);

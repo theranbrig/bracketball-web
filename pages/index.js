@@ -7,7 +7,7 @@ import Link from 'next/link';
 import LoadingModal from '../components/LoadingModal';
 import { FirebaseActionContext } from '../utilities/context/FirebaseActionContext';
 import { motion } from 'framer-motion';
-import CurrentShowingTournament from '../components/CurrentShowingTournament';
+import CurrentShowingTournament from '../components/TournamentBasicInformation';
 
 const index = ({ children, user }) => {
   const [currentShowingTournament, setCurrentShowingTournament] = useState('');

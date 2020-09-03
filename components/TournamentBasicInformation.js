@@ -1,15 +1,16 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useMemo } from 'react';
 
 import { FirebaseActionContext } from '../utilities/context/FirebaseActionContext';
 import { ImStarEmpty } from 'react-icons/im';
+import { RiUser3Line } from 'react-icons/ri';
 import LoadingModal from './LoadingModal';
+import InviteUser from './InviteUser';
+import StandingsTable from './StandingsTable';
 
 const CurrentShowingTournament = ({ currentShowingTournament }) => {
   const [tournament, setTournament] = useState(null);
   const [members, setMembers] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [inviteEmail, setInviteEmail] = useState('');
-
   const { dbh, sendPoolInvitation } = useContext(FirebaseActionContext);
 
   useEffect(() => {
@@ -31,6 +32,7 @@ const CurrentShowingTournament = ({ currentShowingTournament }) => {
                 players.push({ id: snapshot.id, ...snapshot.data() });
               });
               setMembers(players);
+
               setLoading(false);
             });
         });
@@ -38,45 +40,27 @@ const CurrentShowingTournament = ({ currentShowingTournament }) => {
   }, [currentShowingTournament]);
 
   return (
-    <div className='relative'>
+    <div className='relative flex flex-col flex-between '>
       {loading ? <LoadingModal /> : null}
       {tournament ? (
         <>
           <p>{tournament.name}</p>
           {members.map((member) => (
             <p className='flex flex-row items-center'>
-              {member.status === 'OWNER' ? <ImStarEmpty className='inline-block mr-2' /> : null}
+              {member.role === 'OWNER' ? (
+                <ImStarEmpty className='inline-block mr-2' />
+              ) : (
+                <RiUser3Line className='inline-block mr-2' />
+              )}
               {member.username}
             </p>
           ))}
+          {members.length ? <StandingsTable members={members} /> : null}
           <div>
             {members.length < tournament.players ? (
-              <>
-                <h3>Add Members</h3>
-                <form
-                  className='w-1/2'
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    sendPoolInvitation(inviteEmail, currentShowingTournament, tournament.name);
-                  }}>
-                  <label className='input-form-label'>Email Address</label>
-                  <input
-                    className='input-form'
-                    value={inviteEmail}
-                    onChange={(e) => setInviteEmail(e.target.value)}
-                    required
-                  />
-                  <button
-                    disabled={!inviteEmail}
-                    className='w-button bg-powder block rounded-lg border-2 border-celadon text-prussian py-1 mx-auto'
-                    type='submit'>
-                    Send Invite
-                  </button>
-                  {/* TODO: Create loading and success */}
-                </form>
-              </>
+              <InviteUser tournament={tournament} />
             ) : (
-              <h3>Membership full</h3>
+              <h3 className='text-2xl text-prussian text-center'>Membership full</h3>
             )}
           </div>
         </>
