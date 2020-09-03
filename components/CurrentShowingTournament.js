@@ -57,7 +57,7 @@ const CurrentShowingTournament = ({ currentShowingTournament }) => {
                   className='w-1/2'
                   onSubmit={(e) => {
                     e.preventDefault();
-                    sendPoolInvitation(inviteEmail, currentShowingTournament);
+                    sendPoolInvitation(inviteEmail, currentShowingTournament, tournament.name);
                   }}>
                   <label className='input-form-label'>Email Address</label>
                   <input
@@ -72,6 +72,7 @@ const CurrentShowingTournament = ({ currentShowingTournament }) => {
                     type='submit'>
                     Send Invite
                   </button>
+                  {/* TODO: Create loading and success */}
                 </form>
               </>
             ) : (

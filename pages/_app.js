@@ -13,8 +13,6 @@ import fetch from 'isomorphic-unfetch';
 import { server } from '../utilities/constants';
 
 function MyApp({ Component, pageProps, user }) {
-  console.log(user);
-
   return (
     <>
       <Head>

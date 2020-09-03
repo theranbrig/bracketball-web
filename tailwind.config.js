@@ -19,6 +19,7 @@ module.exports = {
       },
       width: {
         button: '240px',
+        toastButton: '80px'
       },
     },
     fontFamily: {

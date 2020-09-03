@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import cookie from 'js-cookie';
-import { createErrorToast } from '../errorFunctions';
+import { createErrorToast, createInvitationToast } from '../toast';
 import firebase from '../firebaseSetup';
 import { toast } from 'react-toastify';
 import { tokenName } from '../constants';
@@ -28,7 +28,7 @@ const FirebaseActionProvider = ({ children }) => {
           .doc(doc.id)
           .collection('memberDetails')
           .doc(owner.uid)
-          .set({ id: owner.uid, username: owner.username, status: 'OWNER' })
+          .set({ id: owner.uid, username: owner.username, role: 'OWNER' })
           .then(() => {
             router.push('/');
             setLoading(false);
@@ -62,31 +62,70 @@ const FirebaseActionProvider = ({ children }) => {
 
   const joinTournament = (user, tournamentId) => {
     setLoading(true);
-    const userDetailRef = dbh
+    // Check if Tournament Exists
+    dbh
       .collection('tournaments')
       .doc(tournamentId)
-      .collection('memberDetails')
-      .doc(user.uid);
-    userDetailRef.get().then((doc) => {
-      if (!doc.exists) {
-        dbh
-          .collection('tournaments')
-          .doc(tournamentId)
-          .update({ members: firebase.firestore.FieldValue.arrayUnion(user.uid) })
-          .then(() => {
-            userDetailRef.set({ id: user.uid, username: user.username, role: 'USER' }).then(() => {
-              // TODO: DELETE ANY INVITES THAT MAY EXIST
-              router.push('/');
-              setLoading(false);
-            });
-          });
-      } else {
-        createErrorToast('Already a member of this pool.');
-      }
-    });
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          // Check if User is in tournament
+          dbh
+            .collection('tournaments')
+            .doc(tournamentId)
+            .collection('memberDetails')
+            .doc(user.uid)
+            .get()
+            .then((doc) => {
+              if (!doc.exists) {
+                // If user exists add to members list and create userDetails
+                dbh
+                  .collection('tournaments')
+                  .doc(tournamentId)
+                  .update({ members: firebase.firestore.FieldValue.arrayUnion(user.uid) })
+                  .then(() => {
+                    dbh
+                      .collection('tournaments')
+                      .doc(tournamentId)
+                      .collection('memberDetails')
+                      .doc(user.uid)
+                      .set({ id: user.uid, username: user.username, role: 'USER' })
+                      .then(() => {
+                        // Delete any invitations with this user and tournament
+                        dbh
+                          .collection('poolInvitations')
+                          .where('user', '==', user.uid)
+                          .where('tournamentId', '==', tournamentId)
+                          .get()
+                          .then((querySnapshot) => {
+                            querySnapshot.forEach((doc) => {
+                              const { id } = doc;
+                  
+                              removeInvitation(id);
+                            });
+                            setLoading(false);
+                          });
+                      })
+                      .catch(() =>
+                        createErrorToast(
+                          'Something went wrong. Check that you have the correct id.'
+                        )
+                      );
+                  });
+              } else {
+                createErrorToast('Already a member of this pool.');
+              }
+            })
+            .catch(() =>
+              createErrorToast('Something went wrong. Check that you have the correct id.')
+            );
+        } else {
+          createErrorToast('Something went wrong. Check that you have the correct id.');
+        }
+      });
   };
 
-  const sendPoolInvitation = (email, tournamentId) => {
+  const sendPoolInvitation = (email, tournamentId, tournamentName, successCallback) => {
     let user = null;
     dbh
       .collection('users')
@@ -121,9 +160,10 @@ const FirebaseActionProvider = ({ children }) => {
                       // If not in the pool or no invite then create invite
                       dbh
                         .collection('poolInvitations')
-                        .add({ user: user.uid, tournamentId })
+                        .add({ user: user.uid, tournamentId, tournamentName })
                         .then(() => {
                           console.log('Invitation Sent');
+                          // TODO: Add in successCallback(true);
                         });
                     }
                   });
@@ -133,6 +173,26 @@ const FirebaseActionProvider = ({ children }) => {
           createErrorToast('No user found with that email address.');
         }
       });
+  };
+
+  const checkInvitations = (user) => {
+    console.log(user);
+    dbh
+      .collection('poolInvitations')
+      .where('user', '==', user.uid)
+      .onSnapshot((querySnapshot) => {
+        querySnapshot.docs.forEach((doc) => {
+          console.log(doc.data());
+          const invitationId = doc.id;
+          const { tournamentId, tournamentName } = doc.data();
+          createInvitationToast(tournamentId, tournamentName, user, invitationId);
+        });
+      });
+  };
+  // TODO: Accept Invitations
+
+  const removeInvitation = (invitationId) => {
+    dbh.collection('poolInvitations').doc(invitationId).delete();
   };
 
   return (
@@ -145,6 +205,8 @@ const FirebaseActionProvider = ({ children }) => {
         joinTournament,
         dbh,
         sendPoolInvitation,
+        checkInvitations,
+        removeInvitation,
       }}>
       {children}
     </FirebaseActionContext.Provider>

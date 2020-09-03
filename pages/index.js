@@ -11,7 +11,15 @@ import CurrentShowingTournament from '../components/CurrentShowingTournament';
 
 const index = ({ children, user }) => {
   const [currentShowingTournament, setCurrentShowingTournament] = useState('');
-  const { getTournaments, myTournaments, firebaseLoading } = useContext(FirebaseActionContext);
+  const { getTournaments, myTournaments, firebaseLoading, checkInvitations } = useContext(
+    FirebaseActionContext
+  );
+
+  useEffect(() => {
+    if (user) {
+      checkInvitations(user);
+    }
+  }, []);
 
   return (
     <Layout user={user}>

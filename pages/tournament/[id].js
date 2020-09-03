@@ -38,7 +38,7 @@ export async function getServerSideProps({ query }) {
     return {
       id: player.fields.id.stringValue,
       username: player.fields.username.stringValue,
-      status: player.fields.status.stringValue,
+      status: player.fields.role.stringValue,
     };
   });
   console.log(formattedPlayers);

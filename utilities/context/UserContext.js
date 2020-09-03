@@ -4,7 +4,7 @@ import cookie from 'js-cookie';
 import firebase from '../firebaseSetup';
 import { toast } from 'react-toastify';
 import { tokenName } from '../constants';
-import { createErrorToast } from '../errorFunctions';
+import { createErrorToast } from '../toast';
 import { useRouter } from 'next/router';
 
 export const UserContext = React.createContext();
