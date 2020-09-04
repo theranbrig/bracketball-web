@@ -21,7 +21,7 @@ const FirebaseActionProvider = ({ children }) => {
     setLoading(true);
     dbh
       .collection('tournaments')
-      .add({ name, type, players, date, owner: owner.uid, members: [owner.uid] })
+      .add({ name, type, players, date, owner: owner.uid, members: [owner.uid], status: 'PRE' })
       .then((doc) => {
         dbh
           .collection('tournaments')

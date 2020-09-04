@@ -58,16 +58,13 @@ const StandingsTable = ({ members }) => {
   );
 
   return (
-    <div  className="w-11/12 lg:w-1/2 mx-auto mb-8">
-      <h3 className="text-center mb-4">Current Standings</h3>
-      <table
-        className='text-base border-2 border-prussian w-full'
-        {...getTableProps()}>
+    <div className='w-11/12 lg:w-1/2 mx-auto mb-8'>
+      <h3 className='text-center mb-4'>Current Standings</h3>
+      <table className='text-base border-2 border-prussian w-full' {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => {
-                console.log(column);
                 return (
                   <th
                     className='border-t border-b bg-celadon text-honeydew py-1 font-normal'
