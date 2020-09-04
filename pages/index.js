@@ -27,7 +27,7 @@ const index = ({ children, user }) => {
         {user ? (
           <>
             <TournamentList user={user} setCurrentShowingTournament={setCurrentShowingTournament} />
-            <CurrentShowingTournament currentShowingTournament={currentShowingTournament} />
+            <CurrentShowingTournament tournamentId={currentShowingTournament} />
           </>
         ) : null}
         {firebaseLoading ? <LoadingModal /> : null}

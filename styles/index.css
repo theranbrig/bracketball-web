@@ -42,6 +42,9 @@ button:disabled {
   opacity: 0.5;
 }
 
+tr:nth-child(odd) {
+    @apply bg-blue-100;
+}
 /* .Toastify__toast,
 .Toastify__toast--default {
   padding: 8px 20px !important;

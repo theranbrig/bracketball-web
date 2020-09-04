@@ -58,50 +58,59 @@ const StandingsTable = ({ members }) => {
   );
 
   return (
-    <table className='w-11/12 lg:w-1/2 mx-auto mb-8' {...getTableProps()}>
-      <thead>
-        {headerGroups.map((headerGroup) => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map((column) => {
-              console.log(column);
-              return (
-                <th className='border' {...column.getHeaderProps(column.getSortByToggleProps())}>
-                  {column.render('Header')}
-                  <span className=''>
-                    {column.isSorted ? (
-                      column.isSortedDesc ? (
-                        <BsChevronDown className='ml-2 inline-block' />
-                      ) : (
-                        <BsChevronUp className='ml-2 inline-block' />
-                      )
-                    ) : (
-                      <BsChevronDown className='ml-2 opacity-0 inline-block' />
-                    )}
-                  </span>
-                </th>
-              );
-            })}
-          </tr>
-        ))}
-      </thead>
-      <tbody {...getTableBodyProps()}>
-        {rows.map((row) => {
-          prepareRow(row);
-          console.log(row);
-          return (
-            <tr {...row.getRowProps()}>
-              {row.cells.map((cell) => {
+    <div  className="w-11/12 lg:w-1/2 mx-auto mb-8">
+      <h3 className="text-center mb-4">Current Standings</h3>
+      <table
+        className='text-base border-2 border-prussian w-full'
+        {...getTableProps()}>
+        <thead>
+          {headerGroups.map((headerGroup) => (
+            <tr {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map((column) => {
+                console.log(column);
                 return (
-                  <td className='border' {...cell.getCellProps()}>
-                    {cell.render('Cell')}
-                  </td>
+                  <th
+                    className='border-t border-b bg-celadon text-honeydew py-1 font-normal'
+                    {...column.getHeaderProps(column.getSortByToggleProps())}>
+                    {column.render('Header')}
+                    <span className=''>
+                      {column.isSorted ? (
+                        column.isSortedDesc ? (
+                          <BsChevronDown className='ml-2 inline-block' />
+                        ) : (
+                          <BsChevronUp className='ml-2 inline-block' />
+                        )
+                      ) : (
+                        <BsChevronDown className='ml-2 opacity-0 inline-block' />
+                      )}
+                    </span>
+                  </th>
                 );
               })}
             </tr>
-          );
-        })}
-      </tbody>
-    </table>
+          ))}
+        </thead>
+        <tbody {...getTableBodyProps()}>
+          {rows.map((row) => {
+            prepareRow(row);
+            console.log(row);
+            return (
+              <tr {...row.getRowProps()}>
+                {row.cells.map((cell) => {
+                  return (
+                    <td
+                      className='border-t border-b border-powder text-center py-1 text-prussian'
+                      {...cell.getCellProps()}>
+                      {cell.render('Cell')}
+                    </td>
+                  );
+                })}
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
   );
 };
 

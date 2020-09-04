@@ -6,25 +6,26 @@ import { RiUser3Line } from 'react-icons/ri';
 import LoadingModal from './LoadingModal';
 import InviteUser from './InviteUser';
 import StandingsTable from './StandingsTable';
+import Link from 'next/link';
 
-const CurrentShowingTournament = ({ currentShowingTournament }) => {
+const tournamentId = ({ tournamentId }) => {
   const [tournament, setTournament] = useState(null);
   const [members, setMembers] = useState([]);
   const [loading, setLoading] = useState(false);
   const { dbh, sendPoolInvitation } = useContext(FirebaseActionContext);
 
   useEffect(() => {
-    if (currentShowingTournament) {
+    if (tournamentId) {
       setLoading(true);
       dbh
         .collection('tournaments')
-        .doc(currentShowingTournament)
+        .doc(tournamentId)
         .get()
         .then((doc) => {
-          setTournament({ id: currentShowingTournament, ...doc.data() });
+          setTournament({ id: tournamentId, ...doc.data() });
           dbh
             .collection('tournaments')
-            .doc(currentShowingTournament)
+            .doc(tournamentId)
             .collection('memberDetails')
             .onSnapshot((querySnapshot) => {
               let players = [];
@@ -37,14 +38,18 @@ const CurrentShowingTournament = ({ currentShowingTournament }) => {
             });
         });
     }
-  }, [currentShowingTournament]);
+  }, [tournamentId]);
 
   return (
     <div className='relative flex flex-col flex-between '>
       {loading ? <LoadingModal /> : null}
       {tournament ? (
         <>
-          <h2 className='text-3xl my-4 text-prussian text-center'>{tournament.name}</h2>
+          <Link href='/tournament/[id]' as={`/tournament/${tournamentId}`}>
+            <a className='text-3xl my-3 text-prussian text-center cursor-pointer'>
+              {tournament.name}
+            </a>
+          </Link>
           {members.length ? <StandingsTable members={members} /> : null}
           <div>
             {members.length < tournament.players ? (
@@ -59,4 +64,4 @@ const CurrentShowingTournament = ({ currentShowingTournament }) => {
   );
 };
 
-export default CurrentShowingTournament;
+export default tournamentId;
