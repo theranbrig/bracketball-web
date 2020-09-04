@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 
 import FormTitle from '../../components/FormTitle';
 import Layout from '../../components/Layout';
+import StandingsTable from '../../components/StandingsTable';
 
 const tournament = ({ user, tournament, players }) => {
   console.log(players);
@@ -11,11 +12,7 @@ const tournament = ({ user, tournament, players }) => {
         <div className='my-4 w-1/2'>
           <FormTitle title={tournament.name} />
         </div>
-        <div>
-          {players.map((player) => (
-            <p>{player.username}</p>
-          ))}
-        </div>
+        <StandingsTable members={players} />
       </div>
     </Layout>
   );
@@ -42,7 +39,8 @@ export async function getServerSideProps({ query }) {
     return {
       id: player.fields.id.stringValue,
       username: player.fields.username.stringValue,
-      status: player.fields.role.stringValue,
+      role: player.fields.role.stringValue,
+      points: player.fields.points.integerValue,
     };
   });
   console.log(formattedPlayers);

@@ -1,6 +1,7 @@
-import { useTable } from 'react-table';
+import { useTable, useSortBy } from 'react-table';
 import { ImStarEmpty } from 'react-icons/im';
 import { RiUser3Line } from 'react-icons/ri';
+import { BsChevronDown, BsChevronUp } from 'react-icons/bs';
 
 const StandingsTable = ({ members }) => {
   const data = React.useMemo(
@@ -23,37 +24,63 @@ const StandingsTable = ({ members }) => {
           ) : (
             <RiUser3Line className='inline-block mr-2' />
           ),
+        width: 20,
+        disableSortBy: true,
       },
       {
         Header: 'User',
         accessor: 'username', // accessor is the "key" in the data
+        width: 100,
       },
       {
         Header: 'Points',
         accessor: 'points',
-        style: {
-          textAlign: 'right',
-        },
+        width: 100,
       },
     ],
     []
   );
 
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({
-    columns,
-    data,
-  });
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable(
+    {
+      columns,
+      data,
+      initialState: {
+        sortBy: [
+          {
+            id: 'points',
+            desc: true,
+          },
+        ],
+      },
+    },
+    useSortBy
+  );
 
   return (
     <table className='w-11/12 lg:w-1/2 mx-auto mb-8' {...getTableProps()}>
       <thead>
         {headerGroups.map((headerGroup) => (
           <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map((column) => (
-              <th className='border' {...column.getHeaderProps()}>
-                {column.render('Header')}
-              </th>
-            ))}
+            {headerGroup.headers.map((column) => {
+              console.log(column);
+              return (
+                <th className='border' {...column.getHeaderProps(column.getSortByToggleProps())}>
+                  {column.render('Header')}
+                  <span className=''>
+                    {column.isSorted ? (
+                      column.isSortedDesc ? (
+                        <BsChevronDown className='ml-2 inline-block' />
+                      ) : (
+                        <BsChevronUp className='ml-2 inline-block' />
+                      )
+                    ) : (
+                      <BsChevronDown className='ml-2 opacity-0 inline-block' />
+                    )}
+                  </span>
+                </th>
+              );
+            })}
           </tr>
         ))}
       </thead>
