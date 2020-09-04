@@ -15,7 +15,7 @@ const tournament = ({ user }) => {
 
   const [tournament, setTournament] = useState(null);
   const [players, setPlayers] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [owner, setOwner] = useState(null);
 
   const { dbh } = useContext(FirebaseActionContext);
@@ -59,13 +59,14 @@ const tournament = ({ user }) => {
               }
             });
             setPlayers(members);
+            setLoading(false);
           });
       });
   }, []);
-
+  // TODO: LIVE TOURNAMENTS WAITING ROOM AND LIVE ROOM
   return (
     <Layout user={user}>
-      {tournament ? (
+      {!loading ? (
         <div className='flex flex-col h-desktopFullBody items-center justify-start'>
           <div className='my-4 w-1/2'>
             <FormTitle title={tournament.name} />
