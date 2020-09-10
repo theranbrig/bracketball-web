@@ -75,11 +75,14 @@ const tournament = ({ user }) => {
     <Layout user={user}>
       {!loading ? (
         <div className='flex flex-col h-desktopFullBody items-center justify-start'>
-            {tournament.status === 'LIVE' || tournament.status === 'WAITING' ? (
-              <h2 className='w-full text-honeydew bg-imperial p-1 text-center'>TOURNAMENT IS LIVE </h2>
-            ) : null}
+          {tournament.status === 'LIVE' || tournament.status === 'WAITING' ? (
+            <h2 className='w-full text-honeydew bg-imperial p-1 text-center'>TOURNAMENT IS LIVE</h2>
+          ) : null}
           <div className='my-4 w-1/2'>
-            <FormTitle title={tournament.name} />
+            <FormTitle
+              title={tournament.name}
+              showBackButton={tournament.status !== 'WAITING' || tournament.status !== 'LIVE'}
+            />
           </div>
           {tournament.status === 'PRE' || tournament.status === 'SCORING' ? (
             <StandingsTable members={players} />
