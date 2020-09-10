@@ -35,11 +35,11 @@ const WaitingRoom = ({ tournament, players, user }) => {
             <tr className='p-2'>
               <td
                 className={` ${
-                  player.status === 'WAITING'
+                  player.status === 'READY'
                     ? 'bg-imperial text-honeydew'
                     : 'bg-powder text-prussian'
                 } w-1/4 text-sm text-center rounded-md`}>
-                {player.status === 'WAITING' ? 'READY' : 'WAIT'}
+                {player.status}
               </td>
               <td className='text-center'>{player.username}</td>
             </tr>

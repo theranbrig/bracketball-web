@@ -18,6 +18,7 @@ const tournament = ({ user }) => {
   const [players, setPlayers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [owner, setOwner] = useState(null);
+  const [teams, setTeams] = useState([]);
 
   const { dbh, updateMemberStatus } = useContext(FirebaseActionContext);
 
@@ -27,9 +28,9 @@ const tournament = ({ user }) => {
       .doc(tournament.id)
       .update({ status: 'WAITING' })
       .then(() => {
-        updateMemberStatus(tournament.id, user.uid, 'WAITING');
+        updateMemberStatus(tournament.id, user.uid, 'READY');
       })
-      .catch((err) => console.log(createErrorToast(err.message)));
+      .catch((err) => createErrorToast(err.message));
   };
 
   useEffect(() => {
@@ -46,54 +47,51 @@ const tournament = ({ user }) => {
           .doc(id)
           .collection('memberDetails')
           .onSnapshot((querySnapshot) => {
-            let members = [];
+            const members = [];
             querySnapshot.docs.forEach((doc) => {
               members.push({ id: doc.id, ...doc.data() });
               if (doc.id === user.uid) {
                 const data = doc.data();
-                dbh
-                  .collection('tournaments')
-                  .doc(id)
-                  .collection('memberDetails')
-                  .doc(user.uid)
-                  .update({ status })
-                  .then(() => {
-                    console.log({ status, ...doc.data() });
-                    setMemberDetails({ status, ...doc.data() });
-                  });
-              }
-              if (doc.data().role === 'OWNER') {
-                setOwner(doc.id);
+                setMemberDetails({ ...doc.data() });
               }
             });
             setPlayers(members);
             setLoading(false);
+            dbh.collection(`tournaments/${id}/teams`).onSnapshot((querySnapshot) => {
+              const teamList = [];
+              querySnapshot.docs.forEach((doc) => {
+                teamList.push({ id: doc.id, ...doc.data() });
+              });
+              setTeams(teamList);
+            });
           });
       });
   }, []);
-  // TODO: LIVE TOURNAMENTS WAITING ROOM AND LIVE ROOM
+
   return (
     <Layout user={user}>
       {!loading ? (
         <div className='flex flex-col h-desktopFullBody items-center justify-start'>
           {tournament.status === 'LIVE' || tournament.status === 'WAITING' ? (
-            <h2 className='w-full text-honeydew bg-imperial p-1 text-center'>TOURNAMENT IS LIVE</h2>
+            <h2 className='w-full text-honeydew live-tournament-flash p-1 text-center'>
+              TOURNAMENT IS LIVE
+            </h2>
           ) : null}
           <div className='my-4 w-1/2'>
             <FormTitle
               title={tournament.name}
-              showBackButton={tournament.status !== 'WAITING' || tournament.status === 'LIVE'}
+              showBackButton={tournament.status !== 'LIVE' && tournament.status !== 'WAITING'}
             />
           </div>
           {tournament.status === 'PRE' || tournament.status === 'SCORING' ? (
             <StandingsTable members={players} />
           ) : null}
           {tournament.status === 'WAITING' || tournament.status === 'LIVE' ? (
-            <LiveTournament players={players} tournament={tournament} user={user} />
+            <LiveTournament players={players} tournament={tournament} user={user} teams={teams} />
           ) : null}
           {tournament.status === 'PRE' ? (
             <>
-              {user.uid === owner ? (
+              {memberDetails.role === 'OWNER' ? (
                 <button onClick={() => startTournament()} className='form-button'>
                   Start Pool
                 </button>
@@ -101,9 +99,7 @@ const tournament = ({ user }) => {
                 <p>Waiting To Start</p>
               )}
             </>
-          ) : (
-            <h1>LIVE</h1>
-          )}
+          ) : null}
         </div>
       ) : (
         <LoadingModal />

@@ -1,14 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react';
 
 import WaitingRoom from './WaitingRoom';
+import Draft from './Draft';
 
-const LiveTournament = ({ tournament, players, user }) => {
+const LiveTournament = ({ tournament, players, user, teams }) => {
   return (
     <>
       {tournament.status === 'WAITING' ? (
-        <WaitingRoom players={players} tournament={tournament} user={user}/>
+        <WaitingRoom players={players} tournament={tournament} user={user} />
       ) : (
-        <h1>Now Live</h1>
+        <Draft players={players} tournament={tournament} user={user} teams={teams}/>
       )}
     </>
   );
