@@ -40,6 +40,7 @@ const tournament = ({ user }) => {
         const { id } = querySnapshot;
         setTournament({ id, ...querySnapshot.data() });
         const { status } = querySnapshot.data();
+        console.log({ ...querySnapshot.data() });
         dbh
           .collection('tournaments')
           .doc(id)
@@ -81,14 +82,14 @@ const tournament = ({ user }) => {
           <div className='my-4 w-1/2'>
             <FormTitle
               title={tournament.name}
-              showBackButton={tournament.status !== 'WAITING' || tournament.status !== 'LIVE'}
+              showBackButton={tournament.status !== 'WAITING' || tournament.status === 'LIVE'}
             />
           </div>
           {tournament.status === 'PRE' || tournament.status === 'SCORING' ? (
             <StandingsTable members={players} />
           ) : null}
           {tournament.status === 'WAITING' || tournament.status === 'LIVE' ? (
-            <LiveTournament players={players} tournament={tournament} />
+            <LiveTournament players={players} tournament={tournament} user={user} />
           ) : null}
           {tournament.status === 'PRE' ? (
             <>
