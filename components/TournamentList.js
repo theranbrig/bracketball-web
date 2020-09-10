@@ -1,4 +1,5 @@
 import { BsChevronLeft, BsChevronRight, BsPlusCircle } from 'react-icons/bs';
+import { HiOutlineArrowCircleRight, HiOutlineInformationCircle } from 'react-icons/hi';
 import React, { useContext, useEffect, useState } from 'react';
 import { compareAsc, format } from 'date-fns';
 
@@ -7,7 +8,6 @@ import Link from 'next/link';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import fromUnixTime from 'date-fns/fromUnixTime';
 import { motion } from 'framer-motion';
-import { HiOutlineInformationCircle, HiOutlineArrowCircleRight } from 'react-icons/hi';
 
 const TournamentList = ({ user, setCurrentShowingTournament }) => {
   const itemsPerPage = 6;
@@ -20,6 +20,7 @@ const TournamentList = ({ user, setCurrentShowingTournament }) => {
       getTournaments(user.uid);
       setTotalPages(Math.ceil(myTournaments.length / itemsPerPage));
     }
+    
   }, []);
 
   const handleChange = (page) => {

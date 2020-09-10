@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { createErrorToast, createInvitationToast } from '../toast';
 
 import cookie from 'js-cookie';
-import { createErrorToast, createInvitationToast } from '../toast';
 import firebase from '../firebaseSetup';
 import { toast } from 'react-toastify';
 import { tokenName } from '../constants';
@@ -46,7 +46,6 @@ const FirebaseActionProvider = ({ children }) => {
   };
 
   const getTournaments = (user) => {
-    setLoading(true);
     dbh
       .collection('tournaments')
       .where('members', 'array-contains', user)
@@ -176,7 +175,7 @@ const FirebaseActionProvider = ({ children }) => {
   };
 
   const checkInvitations = (user) => {
-    console.log(user);
+
     dbh
       .collection('poolInvitations')
       .where('user', '==', user.uid)
@@ -189,7 +188,18 @@ const FirebaseActionProvider = ({ children }) => {
         });
       });
   };
-  // TODO: Accept Invitations
+
+  const updateMemberStatus = (tournamentId, userId, status) => {
+    dbh
+      .collection('tournaments')
+      .doc(tournamentId)
+      .collection('memberDetails')
+      .doc(userId)
+      .update({status})
+      .then(() => console.log('updated'))
+      .catch((err) => {console.log(err);createErrorToast(err.message)});
+
+  }
 
   const removeInvitation = (invitationId) => {
     dbh.collection('poolInvitations').doc(invitationId).delete();
@@ -207,6 +217,8 @@ const FirebaseActionProvider = ({ children }) => {
         sendPoolInvitation,
         checkInvitations,
         removeInvitation,
+        setFirebaseLoading: setLoading,
+        updateMemberStatus
       }}>
       {children}
     </FirebaseActionContext.Provider>

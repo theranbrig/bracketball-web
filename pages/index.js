@@ -1,23 +1,29 @@
 import React, { useContext, useEffect, useState } from 'react';
 
+import CurrentShowingTournament from '../components/TournamentBasicInformation';
+import { FirebaseActionContext } from '../utilities/context/FirebaseActionContext';
 import Layout from '../components/Layout';
-import Scoreboard from '../components/Scoreboard';
-import TournamentList from '../components/TournamentList';
 import Link from 'next/link';
 import LoadingModal from '../components/LoadingModal';
-import { FirebaseActionContext } from '../utilities/context/FirebaseActionContext';
+import Scoreboard from '../components/Scoreboard';
+import TournamentList from '../components/TournamentList';
 import { motion } from 'framer-motion';
-import CurrentShowingTournament from '../components/TournamentBasicInformation';
 
 const index = ({ children, user }) => {
   const [currentShowingTournament, setCurrentShowingTournament] = useState('');
-  const { getTournaments, myTournaments, firebaseLoading, checkInvitations } = useContext(
-    FirebaseActionContext
-  );
+  const {
+    getTournaments,
+    myTournaments,
+    firebaseLoading,
+    setFirebaseLoading,
+    checkInvitations,
+  } = useContext(FirebaseActionContext);
 
   useEffect(() => {
     if (user) {
       checkInvitations(user);
+    } else {
+      setFirebaseLoading(false);
     }
   }, []);
 
@@ -29,7 +35,9 @@ const index = ({ children, user }) => {
             <TournamentList user={user} setCurrentShowingTournament={setCurrentShowingTournament} />
             <CurrentShowingTournament tournamentId={currentShowingTournament} />
           </>
-        ) : null}
+        ) : (
+          <p>No User</p>
+        )}
         {firebaseLoading ? <LoadingModal /> : null}
       </div>
     </Layout>

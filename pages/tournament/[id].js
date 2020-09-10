@@ -18,7 +18,7 @@ const tournament = ({ user }) => {
   const [loading, setLoading] = useState(true);
   const [owner, setOwner] = useState(null);
 
-  const { dbh } = useContext(FirebaseActionContext);
+  const { dbh, updateMemberStatus } = useContext(FirebaseActionContext);
 
   const startTournament = () => {
     dbh
@@ -26,15 +26,7 @@ const tournament = ({ user }) => {
       .doc(tournament.id)
       .update({ status: 'WAITING' })
       .then(() => {
-        dbh
-          .collection('tournaments')
-          .doc(tournament.id)
-          .collection('memberDetails')
-          .doc(user.uid)
-          .update({ status: 'WAITING' })
-          .then(() => console.log('updated'))
-          .catch((err) => console.log(createErrorToast(err.message)));
-        console.log('updated');
+        updateMemberStatus(tournament.id, user.uid, 'WAITING');
       })
       .catch((err) => console.log(createErrorToast(err.message)));
   };
@@ -84,7 +76,7 @@ const tournament = ({ user }) => {
                   Start Pool
                 </button>
               ) : (
-                <p>Waiting for Pool owner to start.</p>
+                <p>Waiting To Start</p>
               )}
             </>
           ) : (

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 
 import cookie from 'js-cookie';
+import { createErrorToast } from '../toast';
 import firebase from '../firebaseSetup';
 import { toast } from 'react-toastify';
 import { tokenName } from '../constants';
-import { createErrorToast } from '../toast';
 import { useRouter } from 'next/router';
 
 export const UserContext = React.createContext();
@@ -24,7 +24,6 @@ const UserProvider = ({ children }) => {
       .createUserWithEmailAndPassword(email, password)
       .then(async (user) => {
         if (user) {
-          console.log(user);
           const userID = user.user.uid;
           const emailVerified = user.user.emailVerified;
           dbh
@@ -50,8 +49,7 @@ const UserProvider = ({ children }) => {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(() => {
-        console.log('USER SIGNED IN');
-        setLoading(false);
+        router.push('/');
       })
       .catch((err) => {
         createErrorToast(err.message);
