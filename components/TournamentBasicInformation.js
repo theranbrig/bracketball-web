@@ -48,6 +48,9 @@ const tournamentId = ({ tournamentId }) => {
           <Link href='/tournament/[id]' as={`/tournament/${tournamentId}`}>
             <a className='text-3xl my-3 text-prussian text-center cursor-pointer'>
               {tournament.name}
+              {tournament.status === 'LIVE' || tournament.status === 'WAITING' ? (
+                <span className='ml-4 bg-imperial p-1 rounded-md text-honeydew'>LIVE</span>
+              ) : null}
             </a>
           </Link>
           {members.length ? <StandingsTable members={members} /> : null}

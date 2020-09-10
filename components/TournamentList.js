@@ -20,7 +20,6 @@ const TournamentList = ({ user, setCurrentShowingTournament }) => {
       getTournaments(user.uid);
       setTotalPages(Math.ceil(myTournaments.length / itemsPerPage));
     }
-    
   }, []);
 
   const handleChange = (page) => {
@@ -79,7 +78,15 @@ const TournamentList = ({ user, setCurrentShowingTournament }) => {
                         <div>
                           <div className='flex flex-row justify-between w-full'>
                             <div>
-                              <p className='uppercase text-base'>{tournament.name}</p>
+                              <p className='uppercase text-base'>
+                                {tournament.name}
+                                  {tournament.status === 'LIVE' || tournament.status === 'WAITING'
+                                    ?
+                                <span className="ml-4 bg-imperial p-1 rounded-md">
+                                    LIVE
+                                </span>
+                                    : null}
+                              </p>
                               <p className='capitalize text-xs'>
                                 {tournament.type} Pool - {date}
                               </p>

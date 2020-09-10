@@ -14,6 +14,7 @@ const tournament = ({ user }) => {
   const { id } = useRouter().query;
 
   const [tournament, setTournament] = useState(null);
+  const [memberDetails, setMemberDetails] = useState(null);
   const [players, setPlayers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [owner, setOwner] = useState(null);
@@ -38,6 +39,7 @@ const tournament = ({ user }) => {
       .onSnapshot((querySnapshot) => {
         const { id } = querySnapshot;
         setTournament({ id, ...querySnapshot.data() });
+        const { status } = querySnapshot.data();
         dbh
           .collection('tournaments')
           .doc(id)
@@ -46,6 +48,19 @@ const tournament = ({ user }) => {
             let members = [];
             querySnapshot.docs.forEach((doc) => {
               members.push({ id: doc.id, ...doc.data() });
+              if (doc.id === user.uid) {
+                const data = doc.data();
+                dbh
+                  .collection('tournaments')
+                  .doc(id)
+                  .collection('memberDetails')
+                  .doc(user.uid)
+                  .update({ status })
+                  .then(() => {
+                    console.log({ status, ...doc.data() });
+                    setMemberDetails({ status, ...doc.data() });
+                  });
+              }
               if (doc.data().role === 'OWNER') {
                 setOwner(doc.id);
               }
@@ -60,6 +75,9 @@ const tournament = ({ user }) => {
     <Layout user={user}>
       {!loading ? (
         <div className='flex flex-col h-desktopFullBody items-center justify-start'>
+            {tournament.status === 'LIVE' || tournament.status === 'WAITING' ? (
+              <h2 className='w-full text-honeydew bg-imperial p-1 text-center'>TOURNAMENT IS LIVE </h2>
+            ) : null}
           <div className='my-4 w-1/2'>
             <FormTitle title={tournament.name} />
           </div>
