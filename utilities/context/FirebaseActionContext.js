@@ -21,7 +21,16 @@ const FirebaseActionProvider = ({ children }) => {
     setLoading(true);
     dbh
       .collection('tournaments')
-      .add({ name, type, players, date, owner: owner.uid, members: [owner.uid], status: 'PRE' })
+      .add({
+        name,
+        type,
+        players,
+        date,
+        owner: owner.uid,
+        members: [owner.uid],
+        memberInfo: [{ id: owner.uid, username: owner.username }],
+        status: 'PRE',
+      })
       .then((doc) => {
         dbh
           .collection('tournaments')
@@ -81,7 +90,10 @@ const FirebaseActionProvider = ({ children }) => {
                 dbh
                   .collection('tournaments')
                   .doc(tournamentId)
-                  .update({ members: firebase.firestore.FieldValue.arrayUnion(user.uid) })
+                  .update({
+                    members: firebase.firestore.FieldValue.arrayUnion(user.uid),
+                    memberInfo: firebase.firestore.FieldValue.arrayUnion({ id: user.uid, username: user.username }),
+                  })
                   .then(() => {
                     dbh
                       .collection('tournaments')
@@ -99,7 +111,6 @@ const FirebaseActionProvider = ({ children }) => {
                           .then((querySnapshot) => {
                             querySnapshot.forEach((doc) => {
                               const { id } = doc;
-
                               removeInvitation(id);
                             });
                             setLoading(false);
@@ -175,7 +186,6 @@ const FirebaseActionProvider = ({ children }) => {
   };
 
   const checkInvitations = (user) => {
-
     dbh
       .collection('poolInvitations')
       .where('user', '==', user.uid)
@@ -195,11 +205,13 @@ const FirebaseActionProvider = ({ children }) => {
       .doc(tournamentId)
       .collection('memberDetails')
       .doc(userId)
-      .update({status})
+      .update({ status })
       .then(() => console.log('updated'))
-      .catch((err) => {console.log(err);createErrorToast(err.message)});
-
-  }
+      .catch((err) => {
+        console.log(err);
+        createErrorToast(err.message);
+      });
+  };
 
   const removeInvitation = (invitationId) => {
     dbh.collection('poolInvitations').doc(invitationId).delete();
@@ -218,7 +230,7 @@ const FirebaseActionProvider = ({ children }) => {
         checkInvitations,
         removeInvitation,
         setFirebaseLoading: setLoading,
-        updateMemberStatus
+        updateMemberStatus,
       }}>
       {children}
     </FirebaseActionContext.Provider>

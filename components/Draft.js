@@ -3,6 +3,7 @@ import { FirebaseActionContext } from '../utilities/context/FirebaseActionContex
 
 const Draft = ({ tournament, user, players, teams }) => {
   const { dbh } = useContext(FirebaseActionContext);
+  console.log({ players, user, teams, tournament });
 
   const selectDraftOrder = (array) => {
     let currentIndex = array.length,
@@ -19,26 +20,47 @@ const Draft = ({ tournament, user, players, teams }) => {
       array[currentIndex] = array[randomIndex];
       array[randomIndex] = temporaryValue;
     }
+    console.log({ array });
     dbh.collection('tournaments').doc(tournament.id).update({ draftOrder: array });
     const totalPicks = teams.length;
-    
+    const order = array;
+    const reverseOrder = array.reverse();
+    let tempPicks = [];
+    let round = 1;
+    while (tempPicks.length < totalPicks) {
+      if (round % 2 === 0) {
+        tempPicks.push(...reverseOrder);
+      } else {
+        tempPicks.push(...order);
+      }
+      round++;
+    }
 
+    console.log(tempPicks);
   };
 
   return (
     <div className='w-full flex flex-row'>
       <div className='w-5/6'>
+        <button
+          onClick={() => {
+            selectDraftOrder(tournament.memberInfo);
+          }}>
+          START DRAFT ORDER SELECTION
+        </button>
         {!tournament.draftOrder ? (
           user.role === 'OWNER' ? (
-            <h1>DRAFT</h1>
-          ) : null
+            <button
+              onClick={() => {
+                selectDraftOrder(tournament.members);
+              }}>
+              START DRAFT ORDER SELECTION
+            </button>
+          ) : (
+            <h2>Selecting Draft Order</h2>
+          )
         ) : (
-          <button
-            onClick={() => {
-              selectDraftOrder(tournament.members);
-            }}>
-            START DRAFT ORDER SELECTION
-          </button>
+          <h1>DRAFT</h1>
         )}
       </div>
       <ul className='w-1/6 overflow-y-scroll'>
