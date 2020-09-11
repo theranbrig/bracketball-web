@@ -8,6 +8,7 @@ import { FirebaseActionContext } from '../../utilities/context/FirebaseActionCon
 import { motion } from 'framer-motion';
 import BackButton from '../../components/buttons/BackButton';
 import FormTitle from '../../components/FormTitle';
+import { testTeams } from '../../teamData';
 
 const create = ({ user }) => {
   const [name, setName] = useState('');
@@ -72,7 +73,7 @@ const create = ({ user }) => {
               className='w-full'
               onSubmit={(e) => {
                 e.preventDefault();
-                createTournament(name, type.value, players.value, date, user);
+                createTournament(name, type.value, players.value, date, user, testTeams);
               }}>
               <label className='input-form-label'>Tournament Name</label>
               <input

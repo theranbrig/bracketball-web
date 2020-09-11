@@ -69,7 +69,7 @@ const Draft = ({ tournament, user, players, teams }) => {
             <p className='text-xs'>
               <strong>
                 {team.seed}
-                {team.region}
+                {team.group}
               </strong>{' '}
               - {team.name}
             </p>

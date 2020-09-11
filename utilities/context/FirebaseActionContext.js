@@ -17,7 +17,7 @@ const FirebaseActionProvider = ({ children }) => {
   const [myTournaments, setMyTournaments] = useState([]);
 
   const router = useRouter();
-  const createTournament = (name, type, players, date, owner) => {
+  const createTournament = (name, type, players, date, owner, teams) => {
     setLoading(true);
     dbh
       .collection('tournaments')
@@ -30,8 +30,11 @@ const FirebaseActionProvider = ({ children }) => {
         members: [owner.uid],
         memberInfo: [{ id: owner.uid, username: owner.username }],
         status: 'PRE',
+        tournamentTitle: teams.name,
       })
-      .then((doc) => {
+      .then(async (doc) => {
+        const { id } = await doc.id;
+        console.log(doc.id);
         dbh
           .collection('tournaments')
           .doc(doc.id)
@@ -39,7 +42,9 @@ const FirebaseActionProvider = ({ children }) => {
           .doc(owner.uid)
           .set({ id: owner.uid, username: owner.username, role: 'OWNER', points: 0 })
           .then(() => {
-            router.push('/');
+            teams.teams.forEach((team) => {
+              dbh.collection(`tournaments/${doc.id}/teams`).add({ ...team });
+            });
             setLoading(false);
           })
           .catch((err) => {
@@ -92,7 +97,10 @@ const FirebaseActionProvider = ({ children }) => {
                   .doc(tournamentId)
                   .update({
                     members: firebase.firestore.FieldValue.arrayUnion(user.uid),
-                    memberInfo: firebase.firestore.FieldValue.arrayUnion({ id: user.uid, username: user.username }),
+                    memberInfo: firebase.firestore.FieldValue.arrayUnion({
+                      id: user.uid,
+                      username: user.username,
+                    }),
                   })
                   .then(() => {
                     dbh
