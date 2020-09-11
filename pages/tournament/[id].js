@@ -52,7 +52,7 @@ const tournament = ({ user }) => {
               members.push({ id: doc.id, ...doc.data() });
               if (doc.id === user.uid) {
                 const data = doc.data();
-                setMemberDetails({ ...doc.data() });
+                setMemberDetails({ ...user, ...doc.data() });
               }
             });
             setPlayers(members);
@@ -87,7 +87,13 @@ const tournament = ({ user }) => {
             <StandingsTable members={players} />
           ) : null}
           {tournament.status === 'WAITING' || tournament.status === 'LIVE' ? (
-            <LiveTournament players={players} tournament={tournament} user={user} teams={teams} />
+            <LiveTournament
+              players={players}
+              tournament={tournament}
+              user={memberDetails}
+              teams={teams}
+            
+            />
           ) : null}
           {tournament.status === 'PRE' ? (
             <>
