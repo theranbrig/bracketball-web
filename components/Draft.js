@@ -1,6 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
 
 import { FirebaseActionContext } from '../utilities/context/FirebaseActionContext';
+import CurrentPicks from './CurrentPicks';
+import TeamList from './TeamList';
+import SelectRandom from './SelectRandom';
 
 const Draft = ({ tournament, user, players, teams }) => {
   const { dbh } = useContext(FirebaseActionContext);
@@ -21,11 +24,10 @@ const Draft = ({ tournament, user, players, teams }) => {
       array[currentIndex] = array[randomIndex];
       array[randomIndex] = temporaryValue;
     }
-    console.log({ array });
     dbh.collection('tournaments').doc(tournament.id).update({ draftOrder: array, currentPick: 1 });
     const totalPicks = teams.length;
     const order = array;
-    const reverseOrder = array.reverse();
+    const reverseOrder = [...array].reverse();
     let tempPicks = [];
     let round = 1;
     while (tempPicks.length < totalPicks) {
@@ -36,19 +38,12 @@ const Draft = ({ tournament, user, players, teams }) => {
       }
       round++;
     }
-
     dbh.collection('tournaments').doc(tournament.id).update({ picks: tempPicks });
   };
 
   return (
     <div className='w-full flex flex-row'>
       <div className='w-5/6'>
-        {/* <button
-          onClick={() => {
-            selectDraftOrder(tournament.memberInfo);
-          }}>
-          START DRAFT ORDER SELECTION
-        </button> */}
         {!tournament.draftOrder ? (
           user.role === 'OWNER' ? (
             <button
@@ -61,50 +56,13 @@ const Draft = ({ tournament, user, players, teams }) => {
             <h2>Selecting Draft Order</h2>
           )
         ) : (
-          <div>
-            <div className='mb-4'>
-              <h2 className='text-center text-prussian mb-1 text-xl'>On the Clock</h2>
-              {tournament.picks
-                .map((pick, idx) => ({ ...pick, number: idx + 1 }))
-                .slice(tournament.currentPick - 1, tournament.currentPick)
-                .map((pick) => (
-                  <p className='mx-8 bg-prussian text-honeydew text-xl p-2 text-center border-2 border-celadon'>
-                    {pick.number} - {pick.username}
-                  </p>
-                ))}
-            </div>
-            <div>
-              <h2 className='text-center text-prussian mb-1 text-xl'>Next Picks</h2>
-              <ul className='list-style-none grid grid-cols-3 gap-4 justify-around mx-auto px-8'>
-                {tournament.picks
-                  .map((pick, idx) => ({ ...pick, number: idx + 1 }))
-                  .slice(tournament.currentPick, tournament.currentPick + 3)
-                  .map((pick, idx) => (
-                    <li
-                      className='bg-powder text-prussian border-2 border-celadon p-2 w-full text-center'
-                      key={pick.uid}>
-                      {pick.number} - {pick.username}
-                    </li>
-                  ))}
-              </ul>
-            </div>
-          </div>
+          <>
+            <CurrentPicks tournament={tournament} user={user} />
+            <SelectRandom teams={teams} user={user} tournament={tournament} />
+          </>
         )}
       </div>
-      <ul className='w-1/6 overflow-y-scroll'>
-        {teams.map((team) => (
-          <li className='border-2 border-prussian bg-celadon text-honeydew p-2 m-1' key={team.id}>
-            <p className='text-xs'>
-              <strong>
-                {team.seed}
-                {team.group}
-              </strong>{' '}
-              - {team.name}
-            </p>
-            <p className='text-xs'>{team.owner ? team.ownerUsername : 'UNDRAFTED'}</p>
-          </li>
-        ))}
-      </ul>
+      <TeamList user={user} teams={teams} />
     </div>
   );
 };
