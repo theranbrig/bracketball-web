@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+
 import { FirebaseActionContext } from '../utilities/context/FirebaseActionContext';
 
 const Draft = ({ tournament, user, players, teams }) => {
@@ -6,7 +7,7 @@ const Draft = ({ tournament, user, players, teams }) => {
   console.log({ players, user, teams, tournament });
 
   const selectDraftOrder = (array) => {
-    let currentIndex = array.length,
+    var currentIndex = array.length,
       temporaryValue,
       randomIndex;
     // While there remain elements to shuffle...
@@ -21,7 +22,7 @@ const Draft = ({ tournament, user, players, teams }) => {
       array[randomIndex] = temporaryValue;
     }
     console.log({ array });
-    dbh.collection('tournaments').doc(tournament.id).update({ draftOrder: array });
+    dbh.collection('tournaments').doc(tournament.id).update({ draftOrder: array, currentPick: 1 });
     const totalPicks = teams.length;
     const order = array;
     const reverseOrder = array.reverse();
@@ -36,7 +37,7 @@ const Draft = ({ tournament, user, players, teams }) => {
       round++;
     }
 
-    console.log(tempPicks);
+    dbh.collection('tournaments').doc(tournament.id).update({ picks: tempPicks });
   };
 
   return (
@@ -60,7 +61,21 @@ const Draft = ({ tournament, user, players, teams }) => {
             <h2>Selecting Draft Order</h2>
           )
         ) : (
-          <h1>DRAFT</h1>
+          <div>
+            <h2 className='text-center text-prussian'>Next Picks</h2>
+            <ul className='list-style-none grid grid-cols-3 gap-4 justify-around mx-auto px-8'>
+              {tournament.picks
+                .map((pick, idx) => ({ ...pick, number: idx + 1 }))
+                .slice(tournament.currentPick - 1, tournament.currentPick + 2)
+                .map((pick, idx) => (
+                  <li
+                    className='bg-powder text-prussian border-2 border-celadon p-2 w-full'
+                    key={pick.uid}>
+                    {pick.number} - {pick.username}
+                  </li>
+                ))}
+            </ul>
+          </div>
         )}
       </div>
       <ul className='w-1/6 overflow-y-scroll'>
