@@ -43,12 +43,12 @@ const Draft = ({ tournament, user, players, teams }) => {
   return (
     <div className='w-full flex flex-row'>
       <div className='w-5/6'>
-        <button
+        {/* <button
           onClick={() => {
             selectDraftOrder(tournament.memberInfo);
           }}>
           START DRAFT ORDER SELECTION
-        </button>
+        </button> */}
         {!tournament.draftOrder ? (
           user.role === 'OWNER' ? (
             <button
@@ -62,19 +62,32 @@ const Draft = ({ tournament, user, players, teams }) => {
           )
         ) : (
           <div>
-            <h2 className='text-center text-prussian'>Next Picks</h2>
-            <ul className='list-style-none grid grid-cols-3 gap-4 justify-around mx-auto px-8'>
+            <div className='mb-4'>
+              <h2 className='text-center text-prussian mb-1 text-xl'>On the Clock</h2>
               {tournament.picks
                 .map((pick, idx) => ({ ...pick, number: idx + 1 }))
-                .slice(tournament.currentPick - 1, tournament.currentPick + 2)
-                .map((pick, idx) => (
-                  <li
-                    className='bg-powder text-prussian border-2 border-celadon p-2 w-full'
-                    key={pick.uid}>
+                .slice(tournament.currentPick - 1, tournament.currentPick)
+                .map((pick) => (
+                  <p className='mx-8 bg-prussian text-honeydew text-xl p-2 text-center border-2 border-celadon'>
                     {pick.number} - {pick.username}
-                  </li>
+                  </p>
                 ))}
-            </ul>
+            </div>
+            <div>
+              <h2 className='text-center text-prussian mb-1 text-xl'>Next Picks</h2>
+              <ul className='list-style-none grid grid-cols-3 gap-4 justify-around mx-auto px-8'>
+                {tournament.picks
+                  .map((pick, idx) => ({ ...pick, number: idx + 1 }))
+                  .slice(tournament.currentPick, tournament.currentPick + 3)
+                  .map((pick, idx) => (
+                    <li
+                      className='bg-powder text-prussian border-2 border-celadon p-2 w-full text-center'
+                      key={pick.uid}>
+                      {pick.number} - {pick.username}
+                    </li>
+                  ))}
+              </ul>
+            </div>
           </div>
         )}
       </div>
