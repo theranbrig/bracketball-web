@@ -19,7 +19,10 @@ module.exports = {
       },
       width: {
         button: '240px',
-        toastButton: '80px'
+        toastButton: '80px',
+      },
+      animation: {
+        'spin-slow': 'spin 15s linear infinite',
       },
     },
     fontFamily: {
