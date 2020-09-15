@@ -37,6 +37,7 @@ module.exports = {
       logo: ['Graduate', '-apple-system', 'sans-serif'],
       title: ['Comfortaa', '-apple-system', 'sans-serif'],
       body: ['Noto Sans KR', 'sans-serif'],
+      number: ['Orbitron', 'sans-serif'],
     },
   },
   variants: {},

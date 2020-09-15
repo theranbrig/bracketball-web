@@ -12,7 +12,7 @@ const PreviousPicks = ({ teams, user }) => {
       <ul>
         {pickedTeams.map((team) => (
           <li
-            className='bg-powder hover:bg-powderDark m-2 rounded-md p-1 border-celadon border-2 text-prussian'
+            className='bg-powder hover:bg-powderDark m-2 rounded-md py-1 px-2 border-celadon border-2 text-prussian text-xs'
             key={team.id}>
             {team.pick} - {team.name}
           </li>
