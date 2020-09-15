@@ -33,6 +33,7 @@ const SelectRandom = ({ tournament, teams, user }) => {
       const remainingTeams = teams.filter((team) => team.owner === '');
       const randomIndex = Math.floor(Math.random() * remainingTeams.length);
       const randomTeam = remainingTeams[randomIndex];
+      const timestamp = Date.now();
       dbh
         .collection(`tournaments/${tournament.id}/teams`)
         .doc(randomTeam.id)
@@ -41,7 +42,7 @@ const SelectRandom = ({ tournament, teams, user }) => {
           dbh
             .collection('tournaments')
             .doc(tournament.id)
-            .update({ currentPick: tournament.currentPick + 1 })
+            .update({ currentPick: tournament.currentPick + 1, previousPickTime: timeStamp })
             .then(() => {
               setLoading(false);
               setRandomTeamView('');

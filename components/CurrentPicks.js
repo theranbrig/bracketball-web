@@ -11,7 +11,7 @@ const CurrentPicks = ({ tournament, user }) => {
       ) : (
         <div>
           <div className='mb-4'>
-            <h2 className='text-center text-prussian mb-1 text-xl'>On the Clock</h2>
+            <h3 className='text-center text-prussian mb-1'>On the Clock</h3>
             {tournament.picks
               .map((pick, idx) => ({ ...pick, number: idx + 1 }))
               .slice(tournament.currentPick - 1, tournament.currentPick)
@@ -26,7 +26,7 @@ const CurrentPicks = ({ tournament, user }) => {
               ))}
           </div>
           <div>
-            <h2 className='text-center text-prussian mb-1 text-xl'>Next Picks</h2>
+            <h3 className='text-center text-prussian mb-1'>Next Picks</h3>
             <ul className='list-style-none grid grid-cols-3 gap-4 justify-around mx-auto px-8'>
               {tournament.picks
                 .map((pick, idx) => ({ ...pick, number: idx + 1 }))
