@@ -74,7 +74,7 @@ const TournamentList = ({ user, setCurrentShowingTournament }) => {
                         height: '120px',
                       }}
                       key={tournament.id}>
-                      <div className='h-gridItemHeight flex flex-col justify-between border-powder border-2 rounded-lg p-4 bg-prussian text-honeydew'>
+                      <div className='h-gridItemHeight flex flex-col justify-between border-powder border-2 rounded-lg p-4 bg-prussian hover:bg-prussianDark text-honeydew'>
                         <div>
                           <div className='flex flex-row justify-between w-full'>
                             <div>

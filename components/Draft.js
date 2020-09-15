@@ -4,6 +4,7 @@ import { FirebaseActionContext } from '../utilities/context/FirebaseActionContex
 import CurrentPicks from './CurrentPicks';
 import TeamList from './TeamList';
 import SelectRandom from './SelectRandom';
+import PreviousPicks from './PreviousPicks';
 
 const Draft = ({ tournament, user, players, teams }) => {
   const { dbh } = useContext(FirebaseActionContext);
@@ -43,6 +44,7 @@ const Draft = ({ tournament, user, players, teams }) => {
 
   return (
     <div className='w-full flex flex-row'>
+      <PreviousPicks teams={teams} />
       <div className='w-5/6'>
         {!tournament.draftOrder ? (
           user.role === 'OWNER' ? (

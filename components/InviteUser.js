@@ -27,7 +27,7 @@ const InviteUser = ({ tournament }) => {
         />
         <button
           disabled={!inviteEmail}
-          className='w-button bg-powder block rounded-lg border-2 border-celadon text-prussian py-1 mx-auto'
+          className='w-button bg-powder block rounded-lg border-2 border-celadon hover:bg-powderDark active:bg-powderDark text-prussian py-1 mx-auto'
           type='submit'>
           Send Invite
         </button>

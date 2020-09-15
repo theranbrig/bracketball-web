@@ -60,10 +60,14 @@ const SelectRandom = ({ tournament, teams, user }) => {
       {currentPick && currentPick.id === user.uid ? (
         <div className='flex flex-col justify-center items-center mt-12'>
           <div className='random-team'>
-          {randomTeamView.length ?
-            <h2 className="text-center text-2xl">Selecting Team...<br/><span>{randomTeamView.toUpperCase()}</span></h2>
-            : null}
-            </div>
+            {randomTeamView.length ? (
+              <h2 className='text-center text-2xl'>
+                Selecting Team...
+                <br />
+                <span>{randomTeamView.toUpperCase()}</span>
+              </h2>
+            ) : null}
+          </div>
 
           <div className='select-button bg-powder border-prussian border-4 rounded-full flex justify-center items-center'>
             <img
@@ -73,7 +77,7 @@ const SelectRandom = ({ tournament, teams, user }) => {
             />
           </div>
           <button
-            className='bg-celadon text-honeydew font-title px-8 py-2 rounded-full mt-4 border-prussian border-2 hover:bg-prussian duration-500 disabled:opacity-75'
+            className='bg-celadon text-honeydew font-title px-8 py-2 rounded-full mt-4 border-prussian border-2 hover:bg-celadonDark active:bg-celadonDark duration-500 disabled:opacity-75'
             disabled={loading}
             onClick={() => {
               selectRandom();

@@ -3,13 +3,21 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        prussianLight: '#374F71',
         prussian: '#1d3557',
+        prussianDark: '#041C3E',
+        celadonLight: '#5F95B7',
         celadon: '#457b9d',
+        celadonDark: '#2C6284',
         celadonTransparent: '#457b9df3',
+        powderLight: '#C2F4F6',
         powder: '#a8dadc',
+        powderDark: '#8FC1C3',
         honeydew: '#f1faee',
         honeydewTransparent: '#f1faee84',
+        imperialLight: '#FF5360',
         imperial: '#e63946',
+        imperialDark: '#CD202D',
       },
       height: {
         desktopNavHeight: '76px',
