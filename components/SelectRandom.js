@@ -4,20 +4,20 @@ import Basketball from '../public/icons/basketball.svg';
 
 const SelectRandom = ({ tournament, teams, user }) => {
   const [currentPick, setCurrentPick] = useState(tournament.currentPick);
+  const [remainingTeams, setRemainingTeams] = useState([]);
   const [loading, setLoading] = useState(false);
   const [randomTeamView, setRandomTeamView] = useState('');
   const [timer, setTimer] = useState('');
   const [displayTimer, setDisplayTimer] = useState(false);
   const { dbh, firebase } = useContext(FirebaseActionContext);
 
-  const displayRandomTeam = () => {
-    const remainingTeams = teams.filter((team) => team.owner === '');
+  const displayRandomTeam = async () => {
     const randomTeamNumber = Math.floor(Math.random() * remainingTeams.length);
     setRandomTeamView(remainingTeams[randomTeamNumber].name);
   };
 
-  // const timestamp = Date.now();
-  // console.log(timestamp);
+  const timestamp = Date.now();
+  console.log(timestamp);
 
   const runDisplayTeams = () => {
     let count = 0;
@@ -32,32 +32,40 @@ const SelectRandom = ({ tournament, teams, user }) => {
     display();
   };
 
-  const selectRandom = (userId, username) => {
+  const updatePick = (userId, username, randomTeam) => {
     setLoading(true);
-    runDisplayTeams();
+    dbh
+      .collection(`tournaments/${tournament.id}/teams`)
+      .doc(randomTeam.id)
+      .update({ owner: userId, ownerName: username, pick: tournament.currentPick })
+      .then(async () => {
+        const timestamp = Date.now();
+        dbh
+          .collection('tournaments')
+          .doc(tournament.id)
+          .update({ currentPick: tournament.currentPick + 1, previousPickTime: timestamp })
+          .then(() => {
+            setLoading(false);
+            setRandomTeamView('');
+          })
+          .catch((err) => console.log(err));
+      })
+      .catch((err) => console.log(err));
+  };
 
-    setTimeout(async () => {
-      const remainingTeams = teams.filter((team) => team.owner === '');
-      const randomIndex = Math.floor(Math.random() * remainingTeams.length);
-      const randomTeam = remainingTeams[randomIndex];
-      dbh
-        .collection(`tournaments/${tournament.id}/teams`)
-        .doc(randomTeam.id)
-        .update({ owner: userId, ownerName: username, pick: tournament.currentPick })
-        .then(async () => {
-          const timestamp = Date.now();
-          dbh
-            .collection('tournaments')
-            .doc(tournament.id)
-            .update({ currentPick: tournament.currentPick + 1, previousPickTime: timestamp })
-            .then(() => {
-              setLoading(false);
-              setRandomTeamView('');
-            })
-            .catch((err) => console.log(err));
-        })
-        .catch((err) => console.log(err));
-    }, 5500);
+  const selectRandom = async (userId, username) => {
+    setLoading(true);
+    const randomIndex = Math.floor(Math.random() * remainingTeams.length);
+    const randomTeam = remainingTeams[randomIndex];
+    console.log(randomTeam);
+    if (remainingTeams.length) {
+      runDisplayTeams();
+      setTimeout(() => {
+        updatePick(user.uid, user.username, randomTeam);
+      }, 5500);
+    } else {
+      console.log('NO TEAMS');
+    }
   };
 
   const runTimer = () => {
@@ -66,8 +74,9 @@ const SelectRandom = ({ tournament, teams, user }) => {
       setTimer(60 - Math.floor((timestamp - tournament.previousPickTime) / 1000));
       if (60 - Math.floor((timestamp - tournament.previousPickTime) / 1000) === 0) {
         if (user.role === 'OWNER') {
-          setDisplayTimer(false);
-          selectRandom(currentPick.id, currentPick.username);
+          const randomIndex = Math.floor(Math.random() * remainingTeams.length);
+          const randomTeam = remainingTeams[randomIndex];
+          updatePick(currentPick.id, currentPick.username, randomTeam);
         }
       }
     }, 1000);
@@ -75,18 +84,15 @@ const SelectRandom = ({ tournament, teams, user }) => {
 
   useEffect(() => {
     setCurrentPick(tournament.picks[tournament.currentPick - 1]);
-
-    if (currentPick && currentPick.id === user.uid) {
-      setDisplayTimer(true);
-      runTimer();
-    }
+    setRemainingTeams(teams.filter((team) => team.owner === ''));
+    runTimer();
   }, [tournament]);
 
   return (
     <>
+      {timer >= 0 && timer < 90 ? <h2 className='font-number'>{timer}</h2> : null}
       {currentPick && currentPick.id === user.uid ? (
         <div className='flex flex-col justify-center items-center mt-12'>
-          {timer >= 0 && timer < 90 ? <h2 className='font-number'>{timer}</h2> : null}
           <div className='random-team'>
             {randomTeamView.length ? (
               <h2 className='text-center text-2xl'>
@@ -107,7 +113,7 @@ const SelectRandom = ({ tournament, teams, user }) => {
           <button
             className='bg-celadon text-honeydew font-title px-8 py-2 rounded-full mt-4 border-prussian border-2 hover:bg-celadonDark active:bg-celadonDark duration-500 disabled:opacity-75'
             onClick={async () => {
-              await selectRandom(user.uid, user.username);
+              await selectRandom(user.uid, user.username );
             }}>
             Select Random Team
           </button>
