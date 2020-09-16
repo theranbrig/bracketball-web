@@ -12,6 +12,7 @@ const TeamItem = ({ color, team, user }) => {
     });
     setTooltipShow(true);
   };
+  
   const closeLeftTooltip = () => {
     setTooltipShow(false);
   };
@@ -20,7 +21,6 @@ const TeamItem = ({ color, team, user }) => {
     <>
       <div className='flex flex-wrap'>
         <div className='w-full'>
-
             <button
             ref={btnRef}
             onMouseEnter={openLeftTooltip}
