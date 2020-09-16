@@ -40,7 +40,7 @@ const TeamItem = ({ color, team, user }) => {
                 </strong>{' '}
                 - {team.name}
               </p>
-              <p className='text-xs'>{team.owner ? team.ownerName : 'UNDRAFTED'}</p>
+              <p className='text-xs'>{team.owner ? team.ownerName : 'Undrafted'}</p>
           </button>
           <div
             className={
