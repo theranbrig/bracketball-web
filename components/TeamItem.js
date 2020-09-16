@@ -12,7 +12,7 @@ const TeamItem = ({ color, team, user }) => {
     });
     setTooltipShow(true);
   };
-  
+
   const closeLeftTooltip = () => {
     setTooltipShow(false);
   };
@@ -21,7 +21,7 @@ const TeamItem = ({ color, team, user }) => {
     <>
       <div className='flex flex-wrap'>
         <div className='w-full'>
-            <button
+          <button
             ref={btnRef}
             onMouseEnter={openLeftTooltip}
             onMouseLeave={closeLeftTooltip}
@@ -41,8 +41,7 @@ const TeamItem = ({ color, team, user }) => {
                 - {team.name}
               </p>
               <p className='text-xs'>{team.owner ? team.ownerName : 'UNDRAFTED'}</p>
-            </button>
-
+          </button>
           <div
             className={
               (tooltipShow ? '' : 'hidden ') +
@@ -67,7 +66,6 @@ const TeamItem = ({ color, team, user }) => {
                 <p>Regular Season Ranking: {team.details.ranking}</p>
                 <p>Conference Record: {team.details.conferenceRecord}</p>
                 <p>Non-Conference Record: {team.details.nonConferenceRecord}</p>
-
               </div>
             </div>
           </div>
