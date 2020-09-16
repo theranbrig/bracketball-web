@@ -32,6 +32,9 @@ module.exports = {
       animation: {
         'spin-slow': 'spin 15s linear infinite',
       },
+      transition: {
+        button: 'all .25s ease'
+      },
     },
     fontFamily: {
       logo: ['Graduate', '-apple-system', 'sans-serif'],

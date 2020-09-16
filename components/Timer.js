@@ -15,7 +15,8 @@ const Timer = ({ tournament, user, currentPick, makePick }) => {
       if (user.role !== 'OWNER' && tournament.currentPick <= tournament.picks.length && !loading) {
         console.log('CALLED');
         makePick(currentPick.id, currentPick.username, setLoading);
-        return;
+        const id = setInterval(timer, 1000);
+        return () => clearInterval(id);
       } else {
         return;
       }

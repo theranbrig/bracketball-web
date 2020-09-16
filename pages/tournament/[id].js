@@ -9,6 +9,7 @@ import WaitingRoom from '../../components/WaitingRoom';
 import LiveTournament from '../../components/LiveTournament';
 import LoadingModal from '../../components/LoadingModal';
 import { useRouter } from 'next/router';
+import ViewBracket from '../../components/ViewBracket';
 
 const tournament = ({ user }) => {
   const { id } = useRouter().query;
@@ -19,6 +20,7 @@ const tournament = ({ user }) => {
   const [loading, setLoading] = useState(true);
   const [owner, setOwner] = useState(null);
   const [teams, setTeams] = useState([]);
+  const [showBracket, setShowBracket] = useState(false);
 
   const { dbh, updateMemberStatus } = useContext(FirebaseActionContext);
 
@@ -82,6 +84,7 @@ const tournament = ({ user }) => {
               title={tournament.name}
               showBackButton={tournament.status !== 'LIVE' && tournament.status !== 'WAITING'}
             />
+            <ViewBracket />
           </div>
           {tournament.status === 'PRE' || tournament.status === 'SCORING' ? (
             <StandingsTable members={players} />
@@ -92,7 +95,6 @@ const tournament = ({ user }) => {
               tournament={tournament}
               user={memberDetails}
               teams={teams}
-            
             />
           ) : null}
           {tournament.status === 'PRE' ? (

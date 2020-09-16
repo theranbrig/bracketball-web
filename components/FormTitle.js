@@ -4,7 +4,7 @@ import BackButton from './buttons/BackButton';
 const FormTitle = ({ title, showBackButton = true }) => {
   return (
     <>
-      <div className='flex flex-row justify-between items-center w-full mb-8'>
+      <div className='flex flex-row justify-between items-center w-full'>
         <div className='holder flex items-center'>{showBackButton ? <BackButton /> : null}</div>
         <h2 className='text-celadon text-3xl font-title'>{title}</h2>
         <div className='holder' />
