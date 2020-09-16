@@ -14,25 +14,28 @@ const CountDownTest =({tournament})=> {
   const onComplete = () => {
     const timestamp = Date.now();
     dbh.collection('tournaments').doc(tournament.id).update({previousPickTime:timestamp})
-    // this.setState(
-    //   {
-    //     completions: this.state.completions + 1
-    //   },
-    //   () => console.log('completions', this.state.completions)
-    // )
-    console.log("RESTARTING")
+    // // this.setState(
+    // //   {
+    // //     completions: this.state.completions + 1
+    // //   },
+    // //   () => console.log('completions', this.state.completions)
+    // // )
+    // console.log("RESTARTING")
   }
+
   useEffect(() => {
     console.log(tournament)
     setCompletions(tournament.previousPickTime);
-    const endTime = tournament.previousPickTime + 100000;
-    console.log((endTime - Date.now()) / 1000)
-    setStartingTime((endTime - Date.now()) / 1000);
+    const endTime = tournament.previousPickTime + 60000;
+    const currentTimeRemaining = (endTime - Date.now()) / 1000;
+    if(endTime > 0) {
+      setStartingTime(currentTimeRemaining);
+    }
   }, [tournament.previousPickTime])
 
 
     return (
-      <div>
+      <div className='mx-auto text-center flex flex-row items-center justify-center'>
         <CountDown
           key={completions}
           seconds={startingTime}
@@ -41,6 +44,7 @@ const CountDownTest =({tournament})=> {
           size={200}
           onComplete={onComplete}
           font="Orbitron"
+          fontSize="30px"
         />
       </div>
     )

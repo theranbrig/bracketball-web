@@ -86,7 +86,7 @@ const SelectRandom = ({ tournament, teams, user }) => {
     <>
       <Timer tournament={tournament} currentPick={currentPick} user={user} makePick={makePick} />
       {currentPick && currentPick.id === user.uid ? (
-        <div className='flex flex-col justify-center items-center mt-12'>
+        <div className='flex flex-col justify-start items-center'>
           <div className='random-team'>
             {randomTeamView.length ? (
               <h2 className='text-center text-2xl'>
