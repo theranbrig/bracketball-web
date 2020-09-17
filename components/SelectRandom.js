@@ -33,8 +33,8 @@ const SelectRandom = ({ tournament, teams, user }) => {
     display();
   };
 
-  const makePick = async (userId, username, loadingCallback) => {
-    loadingCallback(true);
+  const makePick = async (userId, username) => {
+    setLoading(true)
     const pickableTeams = await teams.filter((team) => team.owner === '');
     const randomIndex = await Math.floor(Math.random() * pickableTeams.length);
     const randomTeam = await pickableTeams[randomIndex];
@@ -50,21 +50,22 @@ const SelectRandom = ({ tournament, teams, user }) => {
             .doc(tournament.id)
             .update({ currentPick: tournament.currentPick + 1, previousPickTime: timestamp })
             .then(() => {
-              loadingCallback(false);
+              setLoading(false);
               setRandomTeamView('');
             })
             .catch((err) => {
-              console.log(err);
-              loadingCallback(false);
+              createErrorToast(err.message)
+              setLoading(false);
             });
-        })
-        .catch((err) => {
-          console.log(err);
-          loadingCallback(false);
-        });
+          })
+          .catch((err) => {
+            createErrorToast(err.message)
+            setLoading(false);
+          });
+
     } else {
       console.log('NO TEAMS');
-      loadingCallback(false);
+      setLoading(false);
       createErrorToast('No Teams Remaining');
     }
   };

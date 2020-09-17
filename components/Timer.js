@@ -6,14 +6,17 @@ const CountDown = dynamic(
   () => import('react-countdown-clock'),
   { ssr:false }
 )
-const CountDownTest =({tournament})=> {
+const Timer =({tournament, user, currentPick, makePick})=> {
   const [completions, setCompletions] = useState(0)
   const [startingTime, setStartingTime] = useState(60)
   const {dbh} = useContext(FirebaseActionContext);
 
   const onComplete = () => {
     const timestamp = Date.now();
-    dbh.collection('tournaments').doc(tournament.id).update({previousPickTime:timestamp})
+    if(user.role === 'OWNER') {
+      // dbh.collection('tournaments').doc(tournament.id).update({previousPickTime:timestamp})
+      makePick(currentPick.id, currentPick.username)
+    }
     // // this.setState(
     // //   {
     // //     completions: this.state.completions + 1
@@ -27,17 +30,19 @@ const CountDownTest =({tournament})=> {
     console.log(tournament)
     setCompletions(tournament.previousPickTime);
     const endTime = tournament.previousPickTime + 60000;
-    const currentTimeRemaining = (endTime - Date.now()) / 1000;
-    if(endTime > 0) {
+    const currentTimeRemaining = (60000 - (Date.now() - tournament.previousPickTime)) / 1000;
+    if(currentTimeRemaining > 0) {
       setStartingTime(currentTimeRemaining);
     }
   }, [tournament.previousPickTime])
 
 
     return (
-      <div className='mx-auto text-center flex flex-row items-center justify-center'>
-        <CountDown
-          key={completions}
+      <div className='mx-auto text-center flex flex-row items-center justify-center relative'>
+        <button onClick={onComplete}>Button</button>
+        {startingTime >= 0 && tournament.currentPick <= tournament.picks.length? (
+          <CountDown
+          key={tournament.previousPickTime}
           seconds={startingTime}
           color="#e63946"
           alpha={1}
@@ -45,10 +50,11 @@ const CountDownTest =({tournament})=> {
           onComplete={onComplete}
           font="Orbitron"
           fontSize="30px"
-        />
+          />
+          ): null}
       </div>
     )
 
 }
 
-export default CountDownTest
+export default Timer
