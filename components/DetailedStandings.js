@@ -6,7 +6,6 @@ const DetailedStandings = ({players, tournament, teams, user}) => {
     <div className="w-full px-12">
       <h2 className='text-3xl text-center text-prussian mb-4'>Detailed Standings</h2>
       <div className="grid grid-cols-4 w-full gap-4">
-
       {players.sort((a,b) => b.points - a.points).map(player => {
         const myTeams = teams.filter(team => team.owner === player.id).sort((a, b) => a.seed - b.seed);
         return (

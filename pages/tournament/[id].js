@@ -44,13 +44,15 @@ const tournament = ({ user }) => {
         const { id } = querySnapshot;
         setTournament({ id, ...querySnapshot.data() });
         const { status } = querySnapshot.data();
-        console.log({ ...querySnapshot.data() });
         dbh
           .collection('tournaments')
           .doc(id)
           .collection('memberDetails')
           .onSnapshot((querySnapshot) => {
             const members = [];
+            if(status === "WAITING" && user.status !== "WAITING") {
+              updateMemberStatus(id, user.uid, 'READY')
+            }
             querySnapshot.docs.forEach((doc) => {
               members.push({ id: doc.id, ...doc.data() });
               if (doc.id === user.uid) {

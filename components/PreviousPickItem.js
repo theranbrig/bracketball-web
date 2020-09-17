@@ -26,16 +26,14 @@ const PreviousPickItem = ({ color, team, user }) => {
             ref={btnRef}
             onMouseEnter={openLeftTooltip}
             onMouseLeave={closeLeftTooltip}
-            className='bg-powder hover:bg-powderDark rounded-md border-celadon border-2 text-prussian text-xs my-1 w-11/12 mx-auto block'
+            className='bg-powder hover:bg-powderDark rounded-md border-celadon border-2 text-prussian text-xs py-1 my-1 w-11/12 mx-auto block'
               key={team.id}>
-              <p className='text-xs'>
+              <p className='text-sm text-left pl-4'>
                 <strong>
-                  {team.seed}
-                  {team.group}
+                  {team.pick}
                 </strong>{' '}
-                - {team.name}
+                - {team.name} ({team.seed}{team.group})
               </p>
-              <p className='text-xs'>{team.owner ? team.ownerName : 'Undrafted'}</p>
           </button>
           <div
             className={
@@ -46,15 +44,9 @@ const PreviousPickItem = ({ color, team, user }) => {
             <div>
               <div
                 className={
-                  'bg-celadon text-honeydew opacity-75 text-sm text-left p-3 mb-0 border-b border-solid border-prussian uppercase rounded-lg'
+                  'bg-celadon text-honeydew opacity-75 text-sm text-left p-3 mb-0 border-b border-solid border-prussian rounded-lg'
                 }>
-                 <strong>
-                  {team.seed}
-                  {team.group}
-                - {team.name}
-                </strong>
-                <br/>
-                ({team.details.record})
+                <p>Pick: {team.ownerName}</p>
               </div>
             </div>
           </div>

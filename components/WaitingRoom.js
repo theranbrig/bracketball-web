@@ -25,20 +25,20 @@ const WaitingRoom = ({ tournament, players, user }) => {
   };
   return (
     <div className='w-full flex flex-col'>
-      <table className='w-11/12 lg:w-1/3 mx-auto'>
-        <thead>
+      <table className='w-11/12 lg:w-1/3 mx-auto border-2 border-prussian'>
+        <thead className="bg-celadon text-honeydew">
           <th>Status</th>
           <th>Username</th>
         </thead>
         <tbody className=''>
           {players.map((player) => (
-            <tr className='p-2'>
+            <tr className='p-2 border-b border-b-powder'>
               <td
                 className={` ${
                   player.status === 'READY'
                     ? 'bg-imperial text-honeydew'
                     : 'bg-powder text-prussian'
-                } w-1/4 text-sm text-center rounded-md`}>
+                } w-1/4 text-sm text-center p-1 m-1`}>
                 {player.status}
               </td>
               <td className='text-center'>{player.username}</td>
@@ -46,8 +46,8 @@ const WaitingRoom = ({ tournament, players, user }) => {
           ))}
         </tbody>
       </table>
-      {owner == user.uid && players.length === 1 ? (
-        <button onClick={() => updateTournamentStatus()}>Start the Draft</button>
+      {owner == user.uid && players.length === tournament.players ? (
+        <button className="bg-celadon hover:bg-celadonDark text-white active:bg-celadonDark text-base px-8 py-1 rounded-full shadow-md hover:shadow-lg outline-none focus:outline-none mx-auto block transition-button mt-8" onClick={() => updateTournamentStatus()}>Start the Draft</button>
       ) : null}
     </div>
   );

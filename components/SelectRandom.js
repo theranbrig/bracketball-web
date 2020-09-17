@@ -78,7 +78,8 @@ const SelectRandom = ({ tournament, teams, user }) => {
     setLoading(true);
     runDisplayTeams();
     setTimeout(() => {
-      makePick(user.uid, user.username, randomTeam, setLoading);
+      setLoading(false);
+      makePick(user.uid, user.username);
     }, 5500);
   };
 
@@ -88,8 +89,8 @@ const SelectRandom = ({ tournament, teams, user }) => {
   }, [tournament]);
 
   return (
-    <>
-      <Timer tournament={tournament} currentPick={currentPick} user={user} makePick={makePick} />
+    <div className="grid grid-cols-2">
+      <Timer tournament={tournament} currentPick={currentPick} user={user} makePick={makePick} loading={loading}/>
       {currentPick && currentPick.id === user.uid ? (
         <div className='flex flex-col justify-start items-center'>
           <div className='random-team'>
@@ -101,7 +102,6 @@ const SelectRandom = ({ tournament, teams, user }) => {
               </h2>
             ) : null}
           </div>
-
           <div className='select-button bg-powder border-prussian border-4 rounded-full flex justify-center items-center'>
             <img
               className='select-button-icon animate-spin-slow duration-fiveThous'
@@ -118,7 +118,7 @@ const SelectRandom = ({ tournament, teams, user }) => {
           </button>
         </div>
       ) : null}
-    </>
+    </div>
   );
 };
 

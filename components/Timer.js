@@ -6,7 +6,7 @@ const CountDown = dynamic(
   () => import('react-countdown-clock'),
   { ssr:false }
 )
-const Timer =({tournament, user, currentPick, makePick})=> {
+const Timer =({tournament, user, currentPick, makePick, loading})=> {
   const [completions, setCompletions] = useState(0)
   const [startingTime, setStartingTime] = useState(60)
   const {dbh} = useContext(FirebaseActionContext);
@@ -14,7 +14,7 @@ const Timer =({tournament, user, currentPick, makePick})=> {
   const onComplete = () => {
     const timestamp = Date.now();
     if(user.role === 'OWNER') {
-      // dbh.collection('tournaments').doc(tournament.id).update({previousPickTime:timestamp})
+      dbh.collection('tournaments').doc(tournament.id).update({previousPickTime:timestamp})
       makePick(currentPick.id, currentPick.username)
     }
     // // this.setState(
@@ -30,7 +30,7 @@ const Timer =({tournament, user, currentPick, makePick})=> {
     console.log(tournament)
     setCompletions(tournament.previousPickTime);
     const endTime = tournament.previousPickTime + 60000;
-    const currentTimeRemaining = (60000 - (Date.now() - tournament.previousPickTime)) / 1000;
+    const currentTimeRemaining = (6000000 - (Date.now() - tournament.previousPickTime)) / 1000;
     if(currentTimeRemaining > 0) {
       setStartingTime(currentTimeRemaining);
     }
@@ -39,8 +39,8 @@ const Timer =({tournament, user, currentPick, makePick})=> {
 
     return (
       <div className='mx-auto text-center flex flex-row items-center justify-center relative'>
-        <button onClick={onComplete}>Button</button>
-        {startingTime >= 0 && tournament.currentPick <= tournament.picks.length? (
+        {/* <button onClick={onComplete}>Button</button> */}
+        {startingTime >= 0 && tournament.currentPick <= tournament.picks.length || !loading? (
           <CountDown
           key={tournament.previousPickTime}
           seconds={startingTime}
