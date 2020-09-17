@@ -28,7 +28,7 @@ const PreviousPickItem = ({ color, team, user }) => {
             onMouseLeave={closeLeftTooltip}
             className='bg-powder hover:bg-powderDark rounded-md border-celadon border-2 text-prussian text-xs py-1 my-1 w-11/12 mx-auto block'
               key={team.id}>
-              <p className='text-sm text-left pl-4'>
+              <p className='text-xs text-left pl-4'>
                 <strong>
                   {team.pick}
                 </strong>{' '}
