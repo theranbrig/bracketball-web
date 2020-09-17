@@ -4,10 +4,10 @@ const DetailedStandings = ({players, tournament, teams, user}) => {
   console.log({players, teams, tournament, user})
   return (
     <div className="w-full px-12">
-      <h2>Detailed Standings</h2>
+      <h2 className='text-3xl text-center text-prussian mb-4'>Detailed Standings</h2>
       <div className="grid grid-cols-4 w-full gap-4">
 
-      {players.map(player => {
+      {players.sort((a,b) => b.points - a.points).map(player => {
         const myTeams = teams.filter(team => team.owner === player.id).sort((a, b) => a.seed - b.seed);
         return (
           <table className="border-2 border-prussian">
