@@ -10,6 +10,7 @@ import LiveTournament from '../../components/LiveTournament';
 import LoadingModal from '../../components/LoadingModal';
 import { useRouter } from 'next/router';
 import ViewBracket from '../../components/ViewBracket';
+import DetailedStandings from '../../components/DetailedStandings';
 
 const tournament = ({ user }) => {
   const { id } = useRouter().query;
@@ -108,6 +109,10 @@ const tournament = ({ user }) => {
               )}
             </>
           ) : null}
+          {tournament.status === "SCORING" ? <DetailedStandings   players={players}
+              tournament={tournament}
+              user={memberDetails}
+              teams={teams}/> : null}
         </div>
       ) : (
         <LoadingModal />

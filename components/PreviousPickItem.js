@@ -46,7 +46,7 @@ const PreviousPickItem = ({ color, team, user }) => {
             <div>
               <div
                 className={
-                  'bg-celadon text-honeydew opacity-75 text-sm p-3 mb-0 border-b border-solid border-prussian uppercase rounded-lg'
+                  'bg-celadon text-honeydew opacity-75 text-sm text-left p-3 mb-0 border-b border-solid border-prussian uppercase rounded-lg'
                 }>
                  <strong>
                   {team.seed}
@@ -55,8 +55,6 @@ const PreviousPickItem = ({ color, team, user }) => {
                 </strong>
                 <br/>
                 ({team.details.record})
-              <p>Pick: {team.ownerName}</p>
-
               </div>
             </div>
           </div>

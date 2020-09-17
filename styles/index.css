@@ -43,8 +43,17 @@ button:disabled {
 }
 
 tr:nth-child(odd) {
-  @apply bg-blue-100;
+  @apply bg-powderLight;
 }
+
+tr:nth-child(even):hover {
+  @apply bg-honeydewDark;
+}
+
+tr:nth-child(odd):hover {
+  @apply bg-powder;
+}
+
 /* .Toastify__toast,
 .Toastify__toast--default {
   padding: 8px 20px !important;
