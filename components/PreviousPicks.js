@@ -1,4 +1,5 @@
 import React, { useEffect, useContext, useState } from 'react';
+import PreviousPickItem from './PreviousPickItem';
 
 const PreviousPicks = ({ teams, user }) => {
   const [pickedTeams, setPickedTeams] = useState([]);
@@ -11,11 +12,7 @@ const PreviousPicks = ({ teams, user }) => {
       <h3 className='text-center text-prussian'>Previous Picks</h3>
       <ul>
         {pickedTeams.map((team) => (
-          <li
-            className='bg-powder hover:bg-powderDark m-2 rounded-md py-1 px-2 border-celadon border-2 text-prussian text-xs'
-            key={team.id}>
-            {team.pick} - {team.name}
-          </li>
+          <PreviousPickItem team={team} user={user} key={team.id}/>
         ))}
       </ul>
     </div>

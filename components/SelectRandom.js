@@ -48,7 +48,11 @@ const SelectRandom = ({ tournament, teams, user }) => {
           await dbh
             .collection('tournaments')
             .doc(tournament.id)
-            .update({ currentPick: tournament.currentPick + 1, previousPickTime: timestamp })
+            .update({
+              currentPick: tournament.currentPick + 1,
+              previousPickTime: timestamp,
+              status: tournament.currentPick === tournament.picks.length ? 'SCORING' : 'LIVE',
+            })
             .then(() => {
               setLoading(false);
               setRandomTeamView('');
