@@ -1,6 +1,7 @@
-import React, { useEffect, useContext, useState } from 'react';
-import { FirebaseActionContext } from '../utilities/context/FirebaseActionContext';
+import React, { useContext, useEffect, useState } from 'react';
+
 import Basketball from '../public/icons/basketball.svg';
+import { FirebaseActionContext } from '../utilities/context/FirebaseActionContext';
 import Timer from './Timer';
 import { createErrorToast } from '../utilities/toast';
 
@@ -34,7 +35,7 @@ const SelectRandom = ({ tournament, teams, user }) => {
   };
 
   const makePick = async (userId, username) => {
-    setLoading(true)
+    setLoading(true);
     const pickableTeams = await teams.filter((team) => team.owner === '');
     const randomIndex = await Math.floor(Math.random() * pickableTeams.length);
     const randomTeam = await pickableTeams[randomIndex];
@@ -58,15 +59,14 @@ const SelectRandom = ({ tournament, teams, user }) => {
               setRandomTeamView('');
             })
             .catch((err) => {
-              createErrorToast(err.message)
+              createErrorToast(err.message);
               setLoading(false);
             });
-          })
-          .catch((err) => {
-            createErrorToast(err.message)
-            setLoading(false);
-          });
-
+        })
+        .catch((err) => {
+          createErrorToast(err.message);
+          setLoading(false);
+        });
     } else {
       console.log('NO TEAMS');
       setLoading(false);
@@ -89,8 +89,14 @@ const SelectRandom = ({ tournament, teams, user }) => {
   }, [tournament]);
 
   return (
-    <div className="grid grid-cols-2">
-      <Timer tournament={tournament} currentPick={currentPick} user={user} makePick={makePick} loading={loading}/>
+    <div className='grid grid-cols-2 mt-12'>
+      <Timer
+        tournament={tournament}
+        currentPick={currentPick}
+        user={user}
+        makePick={makePick}
+        loading={loading}
+      />
       {currentPick && currentPick.id === user.uid ? (
         <div className='flex flex-col justify-start items-center'>
           <div className='random-team'>

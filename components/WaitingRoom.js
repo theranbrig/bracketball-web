@@ -23,6 +23,7 @@ const WaitingRoom = ({ tournament, players, user }) => {
         })
     );
   };
+  
   return (
     <div className='w-full flex flex-col'>
       <table className='w-11/12 lg:w-1/3 mx-auto border-2 border-prussian'>

@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 
+import FormTitle from '../components/FormTitle';
 import Layout from '../components/Layout';
 import Link from 'next/link';
 import LoadingModal from '../components/LoadingModal';
 import { UserContext } from '../utilities/context/UserContext';
-import FormTitle from '../components/FormTitle';
+import { useRouter } from 'next/router';
 
 const login = ({ user }) => {
   const [email, setEmail] = useState('');
@@ -12,11 +13,20 @@ const login = ({ user }) => {
   const [username, setUsername] = useState('');
 
   const { emailLogin, userLoading, userError } = useContext(UserContext);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (user) {
+      router.push('/');
+    }
+  }, []);
+
   return (
     <>
       <Layout user={user}>
         <div className='h-desktopFullBody flex flex-col justify-center items-center'>
           <div className='w-1/3 flex flex-col justify-center items-center mx-auto'>
+            {user ?? <p>You are already logged in. You will be redirected shortly.</p>}
             <FormTitle title='Login' />
             <form
               className='w-full'

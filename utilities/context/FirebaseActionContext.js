@@ -31,6 +31,7 @@ const FirebaseActionProvider = ({ children }) => {
         memberInfo: [{ id: owner.uid, username: owner.username }],
         status: 'PRE',
         tournamentTitle: teams.name,
+        groups: teams.groups
       })
       .then(async (doc) => {
         const { id } = await doc.id;

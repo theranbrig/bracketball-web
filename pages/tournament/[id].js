@@ -103,7 +103,7 @@ const tournament = ({ user }) => {
           {tournament.status === 'PRE' ? (
             <>
               {memberDetails.role === 'OWNER' ? (
-                <button onClick={() => startTournament()} className='form-button'>
+                <button onClick={() => startTournament()} className='bg-celadon hover:bg-celadonDark text-white active:bg-celadonDark text-base px-8 py-1 rounded-full shadow-md hover:shadow-lg outline-none focus:outline-none mx-auto block transition-button'>
                   Start Pool
                 </button>
               ) : (

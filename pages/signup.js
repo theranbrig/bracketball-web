@@ -1,22 +1,32 @@
 import React, { useContext, useEffect, useState } from 'react';
 
+import FormTitle from '../components/FormTitle';
 import Layout from '../components/Layout';
 import Link from 'next/link';
 import { UserContext } from '../utilities/context/UserContext';
-import FormTitle from '../components/FormTitle';
+import { useRouter } from 'next/router';
 
 const signup = ({ user }) => {
-  console.log(user);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const { emailSignup } = useContext(UserContext);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (user) {
+      router.push('/');
+    }
+  }, []);
+
   return (
     <Layout user={user}>
       <div className='h-desktopFullBody flex flex-col justify-center items-center'>
         <div className='w-1/3 flex flex-col justify-center items-center mx-auto'>
+          {user ?? <p>You are already logged in. You will be redirected shortly.</p>}
           <FormTitle title='Create Account' />
           <form
             className='w-full'

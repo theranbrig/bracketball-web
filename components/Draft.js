@@ -43,14 +43,14 @@ const Draft = ({ tournament, user, players, teams }) => {
   };
 
   return (
-    <div className='w-full flex flex-row'>
+    <div className='w-full flex flex-row overflow-hidden'>
       <PreviousPicks teams={teams} />
       <div className='w-5/6'>
         {!tournament.draftOrder ? (
           user.role === 'OWNER' ? (
             <button
               onClick={() => {
-                selectDraftOrder(tournament.members);
+                selectDraftOrder(tournament.memberInfo);
               }}>
               START DRAFT ORDER SELECTION
             </button>
@@ -64,7 +64,7 @@ const Draft = ({ tournament, user, players, teams }) => {
           </>
         )}
       </div>
-      <TeamList user={user} teams={teams} />
+      <TeamList user={user} teams={teams} tournament={tournament}/>
     </div>
   );
 };

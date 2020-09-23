@@ -49,7 +49,7 @@ const UserProvider = ({ children }) => {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(() => {
-        router.push('/');
+        router.reload();
       })
       .catch((err) => {
         createErrorToast(err.message);
