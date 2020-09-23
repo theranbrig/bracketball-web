@@ -42,7 +42,6 @@ const Scoreboard = () => {
                     <div className={` ${away.winner && 'font-bold'} mt-2`}>
                       <div className='flex flex-col justify-center items-center w-full'>
                         <img src={away.team.logo} alt={away.team.shortDisplayName} width='48px' />
-
                         <p>
                           <span>
                             {away.curatedRank.current < 26 && `(${away.curatedRank.current}) `}
@@ -80,7 +79,6 @@ const Scoreboard = () => {
                       </div>
                     </div>
                   </div>
-
                   <p className='text-xs text-center'>
                     {groups.shortName} - {venue.address.city}, {venue.address.state}
                   </p>
