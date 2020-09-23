@@ -9,10 +9,10 @@ const Timer = ({ tournament, user, currentPick, makePick, loading }) => {
 
   const onComplete = () => {
     const timestamp = Date.now();
-    // if(user.role === 'OWNER') {
-    dbh.collection('tournaments').doc(tournament.id).update({ previousPickTime: timestamp });
-    //   makePick(currentPick.id, currentPick.username)
-    // }
+    if (user.role === 'OWNER') {
+      // dbh.collection('tournaments').doc(tournament.id).update({ previousPickTime: timestamp });
+      makePick(currentPick.id, currentPick.username);
+    }
   };
 
   useEffect(() => {
