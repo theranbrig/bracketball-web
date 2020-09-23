@@ -58,6 +58,22 @@ const UserProvider = ({ children }) => {
       });
   };
 
+  const logout = () => {
+    setLoading(true);
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        router.push('/');
+        setLoading(false);
+      })
+      .catch((error) => {
+        createErrorToast(err.message);
+        setLoading(false);
+        setError(err);
+      });
+  };
+
   const onAuthStateChange = () => {
     return firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
@@ -77,7 +93,7 @@ const UserProvider = ({ children }) => {
   }, []);
 
   return (
-    <UserContext.Provider value={{ userLoading: loading, emailSignup, emailLogin }}>
+    <UserContext.Provider value={{ userLoading: loading, emailSignup, emailLogin, logout }}>
       {children}
     </UserContext.Provider>
   );

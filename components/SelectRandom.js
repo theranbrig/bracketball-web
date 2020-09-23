@@ -89,16 +89,9 @@ const SelectRandom = ({ tournament, teams, user }) => {
   }, [tournament]);
 
   return (
-    <div className='grid grid-cols-2 mt-12'>
-      <Timer
-        tournament={tournament}
-        currentPick={currentPick}
-        user={user}
-        makePick={makePick}
-        loading={loading}
-      />
+    <div className='flex justify-center items-center flex-row mt-12'>
       {currentPick && currentPick.id === user.uid ? (
-        <div className='flex flex-col justify-start items-center'>
+        <div className='flex flex-col justify-start items-center mr-12'>
           <div className='random-team'>
             {randomTeamView.length ? (
               <h2 className='text-center text-2xl'>
@@ -124,6 +117,13 @@ const SelectRandom = ({ tournament, teams, user }) => {
           </button>
         </div>
       ) : null}
+      <Timer
+        tournament={tournament}
+        currentPick={currentPick}
+        user={user}
+        makePick={makePick}
+        loading={loading}
+      />
     </div>
   );
 };

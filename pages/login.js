@@ -26,7 +26,7 @@ const login = ({ user }) => {
       <Layout user={user}>
         <div className='h-desktopFullBody flex flex-col justify-center items-center'>
           <div className='w-1/3 flex flex-col justify-center items-center mx-auto'>
-            {user ?? <p>You are already logged in. You will be redirected shortly.</p>}
+            {user ? <p>You are already logged in. You will be redirected shortly.</p> : null}
             <FormTitle title='Login' />
             <form
               className='w-full'

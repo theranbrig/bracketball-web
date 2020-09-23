@@ -1,11 +1,12 @@
 export const testTeams = {
   name: '2020 NCAA Mens Basketball',
-  groups: ['W', 'E'],
+  groups: ['WEST', 'EAST'],
   teams: [
     {
       name: 'Minnesota',
       seed: 1,
-      group: 'W',
+      groupAbbr: 'W',
+      group: 'WEST',
       points: 0,
       inTournament: true,
       nextMatch: '2W Michigan',
@@ -22,7 +23,8 @@ export const testTeams = {
     {
       name: 'Michigan',
       seed: 2,
-      group: 'W',
+      groupAbbr: 'W',
+      group: 'WEST',
       points: 0,
       inTournament: true,
       nextMatch: '2W Minnesota',
@@ -39,7 +41,8 @@ export const testTeams = {
     {
       name: 'Michigan State',
       seed: 3,
-      group: 'W',
+      groupAbbr: 'W',
+      group: 'WEST',
       points: 0,
       inTournament: true,
       nextMatch: '4W Wisconsin',
@@ -56,7 +59,8 @@ export const testTeams = {
     {
       name: 'Wisconsin',
       seed: 4,
-      group: 'W',
+      groupAbbr: 'W',
+      group: 'WEST',
       points: 0,
       inTournament: true,
       nextMatch: '3W MSU',
@@ -73,7 +77,8 @@ export const testTeams = {
     {
       name: 'Rutgers',
       seed: 5,
-      group: 'W',
+      groupAbbr: 'W',
+      group: 'WEST',
       points: 0,
       inTournament: true,
       nextMatch: '6W PSU',
@@ -90,7 +95,8 @@ export const testTeams = {
     {
       name: 'Penn State',
       seed: 6,
-      group: 'W',
+      groupAbbr: 'W',
+      group: 'WEST',
       points: 0,
       inTournament: true,
       nextMatch: '2W Michigan',
@@ -107,7 +113,8 @@ export const testTeams = {
     {
       name: 'Indiana',
       seed: 7,
-      group: 'W',
+      groupAbbr: 'W',
+      group: 'WEST',
       points: 0,
       inTournament: true,
       nextMatch: '8W NW',
@@ -124,7 +131,8 @@ export const testTeams = {
     {
       name: 'Indiana',
       seed: 8,
-      group: 'W',
+      groupAbbr: 'W',
+      group: 'WEST',
       points: 0,
       inTournament: true,
       nextMatch: '2W IU',
@@ -141,7 +149,8 @@ export const testTeams = {
     {
       name: 'Duke',
       seed: 1,
-      group: 'E',
+      groupAbbr: 'E',
+      group: 'EAST',
       points: 0,
       inTournament: true,
       nextMatch: '2E UNC',
@@ -158,7 +167,8 @@ export const testTeams = {
     {
       name: 'UNC',
       seed: 2,
-      group: 'E',
+      groupAbbr: 'E',
+      group: 'EAST',
       points: 0,
       inTournament: true,
       nextMatch: '1E Duke',
@@ -175,7 +185,8 @@ export const testTeams = {
     {
       name: 'Georgia Tech',
       seed: 3,
-      group: 'E',
+      groupAbbr: 'E',
+      group: 'EAST',
       points: 0,
       inTournament: true,
       nextMatch: '4E Syracuse',
@@ -192,7 +203,8 @@ export const testTeams = {
     {
       name: 'Syracuse',
       seed: 4,
-      group: 'E',
+      groupAbbr: 'E',
+      group: 'EAST',
       points: 0,
       inTournament: true,
       nextMatch: '3E MSU',
@@ -209,7 +221,8 @@ export const testTeams = {
     {
       name: 'VCU',
       seed: 5,
-      group: 'E',
+      groupAbbr: 'E',
+      group: 'EAST',
       points: 0,
       inTournament: true,
       nextMatch: '6E Clemson',
@@ -226,7 +239,8 @@ export const testTeams = {
     {
       name: 'Clemson',
       seed: 6,
-      group: 'E',
+      groupAbbr: 'E',
+      group: 'EAST',
       points: 0,
       inTournament: true,
       nextMatch: '2W VCU',
@@ -243,7 +257,8 @@ export const testTeams = {
     {
       name: 'South Carolina',
       seed: 7,
-      group: 'E',
+      groupAbbr: 'E',
+      group: 'EAST',
       points: 0,
       inTournament: true,
       nextMatch: '8W Florida',
@@ -260,7 +275,8 @@ export const testTeams = {
     {
       name: 'Florida',
       seed: 8,
-      group: 'E',
+      groupAbbr: 'E',
+      group: 'EAST',
       points: 0,
       inTournament: true,
       nextMatch: '2W South Carolina',
