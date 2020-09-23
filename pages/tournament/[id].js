@@ -50,8 +50,8 @@ const tournament = ({ user }) => {
           .collection('memberDetails')
           .onSnapshot((querySnapshot) => {
             const members = [];
-            if(status === "WAITING" && user.status !== "WAITING") {
-              updateMemberStatus(id, user.uid, 'READY')
+            if (status === 'WAITING' && user.status !== 'WAITING') {
+              updateMemberStatus(id, user.uid, 'READY');
             }
             querySnapshot.docs.forEach((doc) => {
               members.push({ id: doc.id, ...doc.data() });
@@ -103,7 +103,9 @@ const tournament = ({ user }) => {
           {tournament.status === 'PRE' ? (
             <>
               {memberDetails.role === 'OWNER' ? (
-                <button onClick={() => startTournament()} className='bg-celadon hover:bg-celadonDark text-white active:bg-celadonDark text-base px-8 py-1 rounded-full shadow-md hover:shadow-lg outline-none focus:outline-none mx-auto block transition-button'>
+                <button
+                  onClick={() => startTournament()}
+                  className='bg-celadon hover:bg-celadonDark text-white active:bg-celadonDark text-base px-8 py-1 rounded-full shadow-md hover:shadow-lg outline-none focus:outline-none mx-auto block transition-button'>
                   Start Pool
                 </button>
               ) : (
@@ -111,10 +113,14 @@ const tournament = ({ user }) => {
               )}
             </>
           ) : null}
-          {tournament.status === "SCORING" ? <DetailedStandings   players={players}
+          {tournament.status === 'SCORING' ? (
+            <DetailedStandings
+              players={players}
               tournament={tournament}
               user={memberDetails}
-              teams={teams}/> : null}
+              teams={teams}
+            />
+          ) : null}
         </div>
       ) : (
         <LoadingModal />

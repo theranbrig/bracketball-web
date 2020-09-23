@@ -13,7 +13,7 @@ const ViewBracket = () => {
         onClick={() => setShowBracket(!showBracket)}>
         View Bracket
       </button>
-      <Rodal visible={showBracket} onClose={hide} animation='flip' width='1000' height='800'>
+      <Rodal visible={showBracket} onClose={hide} animation='flip' width={1000} height={800}>
         <img
           src='https://www.ncaa.com/_flysystem/public-s3/images/2019-06-27/2020-NCAA-bracket-March-Madness_0.jpg'
           alt='tournament bracket'

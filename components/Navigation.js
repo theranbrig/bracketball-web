@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 
 import Link from 'next/link';
 import { UserContext } from '../utilities/context/UserContext';
+import Hoop from '../public/icons/hoop.svg';
 
 const Navigation = ({ user }) => {
   const { logout } = useContext(UserContext);
@@ -9,6 +10,7 @@ const Navigation = ({ user }) => {
     <nav className='flex justify-between items-center px-12 lg:px-32 border-b-4 border-celadon '>
       <Link href='/'>
         <a className='bg-prussian text-5xl text-honeydew tracking-wide pointer-cursor font-logo'>
+          <img className='h-12 inline-block mr-4' src={Hoop} alt='basketball hoop' />
           Bracketball
         </a>
       </Link>
