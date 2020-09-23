@@ -26,22 +26,23 @@ const Timer = ({ tournament, user, currentPick, makePick, loading }) => {
 
   return (
     <div className='text-center flex flex-col items-center justify-center relative'>
-      {/* <button onClick={onComplete}>Button</button> */}
-      <h3 className='text-2xl text-prussian mb-4'>Time Remaining</h3>
-      <div className='relative block'>
-        {startingTime >= 0 && !loading ? (
-          <CountDown
-            key={startingTime}
-            seconds={startingTime}
-            color='#e63946'
-            alpha={1}
-            size={200}
-            onComplete={onComplete}
-            font='Orbitron'
-            fontSize='30px'
-          />
-        ) : null}
-      </div>
+      {startingTime >= 0 && !loading ? (
+        <>
+          <h3 className='text-2xl text-prussian mb-4'>Time Remaining</h3>
+          <div className='relative block'>
+            <CountDown
+              key={startingTime}
+              seconds={startingTime}
+              color='#e63946'
+              alpha={1}
+              size={200}
+              onComplete={onComplete}
+              font='Orbitron'
+              fontSize='30px'
+            />
+          </div>
+        </>
+      ) : null}
     </div>
   );
 };
