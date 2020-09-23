@@ -5,6 +5,7 @@ import CurrentPicks from './CurrentPicks';
 import TeamList from './TeamList';
 import SelectRandom from './SelectRandom';
 import PreviousPicks from './PreviousPicks';
+import SelectBracket from './SelectBracket';
 
 const Draft = ({ tournament, user, players, teams }) => {
   const { dbh } = useContext(FirebaseActionContext);
@@ -60,11 +61,12 @@ const Draft = ({ tournament, user, players, teams }) => {
         ) : (
           <>
             <CurrentPicks tournament={tournament} user={user} />
-            <SelectRandom teams={teams} user={user} tournament={tournament} />
+            {/* <SelectRandom teams={teams} user={user} tournament={tournament} /> */}
+            <SelectBracket teams={teams} user={user} tournament={tournament} />
           </>
         )}
       </div>
-      <TeamList user={user} teams={teams} tournament={tournament}/>
+      <TeamList user={user} teams={teams} tournament={tournament} />
     </div>
   );
 };

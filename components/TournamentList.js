@@ -78,23 +78,20 @@ const TournamentList = ({ user, setCurrentShowingTournament }) => {
                         <div>
                           <div className='flex flex-row justify-between w-full'>
                             <div>
-                              <p className='uppercase text-base'>
-                                {tournament.name}
-                                  {tournament.status === 'LIVE' || tournament.status === 'WAITING'
-                                    ?
-                                <span className="ml-4 bg-imperial p-1 rounded-md">
-                                    LIVE
-                                </span>
-                                    : null}
-                              </p>
+                            <Link href='/tournament/[id]' as={`/tournament/${tournament.id}`}>
+                                <a className='uppercase text-base'>
+                                  {tournament.name}
+                                  {tournament.status === 'LIVE' ||
+                                  tournament.status === 'WAITING' ? (
+                                    <span className='ml-4 bg-imperial p-1 rounded-md'>LIVE</span>
+                                  ) : null}
+                                </a>
+                              </Link>
                               <p className='capitalize text-xs'>
                                 {tournament.type} Pool - {date}
                               </p>
                             </div>
-                            <Link
-                              href='/tournament/[id]'
-                              as={`/tournament/${tournament.id}`}
-                              key={tournament.id}>
+                            <Link href='/tournament/[id]' as={`/tournament/${tournament.id}`}>
                               <a>
                                 <HiOutlineArrowCircleRight color='#f1faee' size='1.5rem' />
                               </a>

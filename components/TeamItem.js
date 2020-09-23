@@ -20,7 +20,7 @@ const TeamItem = ({ color, team, user }) => {
   return (
     <>
       <div className='flex flex-wrap'>
-        <div className='w-full'>
+        <div className='w-11/12 mx-auto'>
           <button
             ref={btnRef}
             onMouseEnter={openLeftTooltip}
@@ -31,12 +31,12 @@ const TeamItem = ({ color, team, user }) => {
                   : team.owner === user.uid
                   ? 'bg-green-600 hover:bg-green-800'
                   : 'bg-imperial hover:bg-imperialDark'
-              } text-honeydew p-2 mx-auto my-1 rounded-lg w-11/12 text-left`}
+              } text-honeydew p-2 mx-auto my-1 rounded-lg w-full text-left`}
               key={team.id}>
               <p className='text-xs'>
                 <strong>
                   {team.seed}
-                  {team.group}
+                  {team.groupAbbr}
                 </strong>{' '}
                 - {team.name}
               </p>
@@ -55,7 +55,7 @@ const TeamItem = ({ color, team, user }) => {
                 }>
                  <strong>
                   {team.seed}
-                  {team.group}
+                  {team.groupAbbr}
                 - {team.name}
                 </strong>
                 <br/>
