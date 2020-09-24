@@ -138,5 +138,11 @@ tr:nth-child(odd):hover {
   transform: rotate(180deg) scaleX(-1);
 }
 
+.group-title {
+  transform: rotate(-90deg);
+  height: auto;
+  align-self: center;
+}
+
 /* purgecss end ignore */
 @tailwind utilities;
