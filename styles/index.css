@@ -134,5 +134,9 @@ tr:nth-child(odd):hover {
   min-height: 100px;
 }
 
+.rotated-bracket {
+  transform: rotate(180deg) scaleX(-1);
+}
+
 /* purgecss end ignore */
 @tailwind utilities;

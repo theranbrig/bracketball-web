@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 
-import { FirebaseActionContext } from '../utilities/context/FirebaseActionContext';
 import CurrentPicks from './CurrentPicks';
-import TeamList from './TeamList';
-import SelectRandom from './SelectRandom';
+import { FirebaseActionContext } from '../utilities/context/FirebaseActionContext';
 import PreviousPicks from './PreviousPicks';
 import SelectBracket from './SelectBracket';
+import SelectRandom from './SelectRandom';
+import TeamList from './TeamList';
 
 const Draft = ({ tournament, user, players, teams }) => {
   const { dbh } = useContext(FirebaseActionContext);
@@ -46,7 +46,7 @@ const Draft = ({ tournament, user, players, teams }) => {
   return (
     <div className='w-full flex flex-row overflow-hidden'>
       <PreviousPicks teams={teams} />
-      <div className='w-5/6'>
+      <div className='w-5/6 overflow-y-scroll'>
         {!tournament.draftOrder ? (
           user.role === 'OWNER' ? (
             <button
