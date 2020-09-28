@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import {motion} from 'framer-motion'
+import { motion } from 'framer-motion';
 const Scoreboard = () => {
   const [scores, setScores] = useState(null);
 
@@ -22,8 +22,8 @@ const Scoreboard = () => {
       {scores !== null ? (
         <>
           <div className='text-center text-prussian text-2xl'>
-            <h2>{scores.leagues[0].name} Scores</h2>
-            <h3>{scores.eventsDate.date.slice(0, 10)}</h3>
+            <h2 className='text-base'>{scores.leagues[0].name} Scores</h2>
+            <h3 className='text-base'>{scores.eventsDate.date.slice(0, 10)}</h3>
           </div>
           {scores.events.map((score) => {
             const [home, away] = score.competitions[0].competitors;
@@ -33,10 +33,10 @@ const Scoreboard = () => {
                 exit={{ opacity: 0, scale: 0 }}
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ type: 'spring', ease: 'easeIn', duration: 1, mass: 0.5 }} key={score.id}>
-                <div
-                  className='px-4 py-2 m-4 text-base border-2 rounded-lg border-celadon font-normal font-body bg-honeydew tracking-wide'
-                 >
+                transition={{ type: 'spring', ease: 'easeIn', duration: 1, mass: 0.5 }}
+                key={score.id}
+              >
+                <div className='px-4 py-2 m-4 text-base border-2 rounded-lg border-celadon font-normal font-body bg-honeydew tracking-wide'>
                   <p className='text-xs text-center'>{score.name}</p>
                   <div className='grid grid-cols-3 justify-around items-center'>
                     <div className={` ${away.winner && 'font-bold'} mt-2`}>
