@@ -8,6 +8,7 @@ import LoadingModal from '../components/LoadingModal';
 import Scoreboard from '../components/Scoreboard';
 import TournamentList from '../components/TournamentList';
 import { motion } from 'framer-motion';
+import Landing from '../components/Landing';
 
 const index = ({ children, user }) => {
   const [currentShowingTournament, setCurrentShowingTournament] = useState('');
@@ -36,7 +37,7 @@ const index = ({ children, user }) => {
             <CurrentShowingTournament tournamentId={currentShowingTournament} />
           </>
         ) : (
-          <p>No User</p>
+          <Landing />
         )}
         {firebaseLoading ? <LoadingModal /> : null}
       </div>
